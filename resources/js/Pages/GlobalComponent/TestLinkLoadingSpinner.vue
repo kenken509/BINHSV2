@@ -1,17 +1,22 @@
 <template>
-        <div  class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none w-full ">
-            <div   class="flex justify-center items-center flex-col" >
-                
-                <ProgressSpinner  style="width: 50px; height: 50px;" strokeWidth="4" fill="none" animationDuration="1s" aria-label="Custom ProgressSpinner" />
-                <span class="flex items-baseline mt-2 ">
-                    Getting access to:&nbsp; <span class="text-blue-600">{{data.installerLink}}&nbsp;</span>
-                    <span class="flex items-baseline mt-2 ellipsis space-x-0">
-                        <span class="text-[14px] font-bold">.</span>
-                        <span class="text-[14px]">.</span>
-                        <span class="text-[14px]">.</span>
+        <div  class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none w-full bg-red-400 ">
+            <Dialog v-model:visible="showModal" modal header="Validating Google Drive Link" :closable="false"  :style="{ width: '70vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
+                <div>
+                    <hr class=" border-b-2">
+                </div>
+                <div   class="flex justify-center items-center flex-col  w-[100%]  p-14" >
+                    <ProgressSpinner  style="width: 50px; height: 50px;" strokeWidth="4" fill="none" animationDuration="1s" aria-label="Custom ProgressSpinner" />
+                    <span class="flex items-baseline mt-2 ">
+                        Getting access to:&nbsp; <span class="text-blue-600">{{data.installerLink}}&nbsp;</span>
+                        <span class="flex items-baseline mt-2 ellipsis space-x-0">
+                            <span class="text-[14px] font-bold">.</span>
+                            <span class="text-[14px]">.</span>
+                            <span class="text-[14px]">.</span>
+                        </span>
                     </span>
-                </span>
-            </div>                           
+                </div>    
+            </Dialog>
+                                   
         </div>
 </template>
 <script setup>
@@ -21,6 +26,7 @@ const data = defineProps({
     installerLink:String,
 })
 
+const showModal = ref(true)
 const installerLink = ref('https test muna');
 
 </script>

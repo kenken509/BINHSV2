@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="w-full mt-4">
-                        <Button label="Submit" class="w-full " type="submit" />
+                        <Button label="Submit" class="w-full " :disabled="form.processing" type="submit" />
                     </div>
                     
                 </div>
@@ -59,7 +59,7 @@
                         <InputError :error="validationError"/>
                     
                         <div class="w-full mt-4">
-                            <Button label="Submit" class="w-full " type="submit" />
+                            <Button label="Submit" class="w-full " :disabled="form.processing" type="submit" />
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                             <div v-if="installerValidator" class="mt-2">
                                     <InputError :error="installerValidator" />
                             </div>
-                            <div v-if="isLoading">
+                            <div v-if="isLoading" > 
                                 <TestLinkLoadingSpinner :installerLink="form.installerLink"/>
                             </div>
                            
@@ -177,7 +177,7 @@
                         <!--image-->
                         <hr class="my-4 border-t-2 border-gray-400">
                         <div class="w-full mt-4">
-                            <Button label="Submit" class="w-full " type="submit" />
+                            <Button label="Submit" class="w-full " :disabled="form.processing" type="submit" />
                         </div>
                     </div>
                 </div>               
@@ -225,7 +225,7 @@
                         <!--image-->
                         
                         <div class="w-full mt-4">
-                            <Button label="Submit" class="w-full " type="submit" />
+                            <Button label="Submit" class="w-full " :disabled="form.processing" type="submit" />
                         </div>
                     </div>
                 </div>
