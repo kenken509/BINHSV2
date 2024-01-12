@@ -20,10 +20,12 @@ use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
     public function create(){ // presents a form that allows you to submit something
+        // test comment for pull
         return inertia('Auth/Login');
     }
     
     public function store(Request $request){ // create session if the data sent is valid which means there is a valid user name
+        
         
         $credentials = $request->validate([
             'email' => 'required|string|email',
