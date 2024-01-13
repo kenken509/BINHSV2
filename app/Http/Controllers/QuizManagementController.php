@@ -124,30 +124,30 @@ class QuizManagementController extends Controller
             
             // $quizId = $latestQuiz[0]->id;
             
-            foreach ($questionsArray as $questionData) 
-            {
+            // foreach ($questionsArray as $questionData) 
+            // {
                 
-                $question = new QuizQuestion();
-                $question->question = $questionData['question'];
-                $question->quiz_id = $quizId;
-                $question->correct_answer = $questionData['correct_answer'];
-                $question->save();
+            //     $question = new QuizQuestion();
+            //     $question->question = $questionData['question'];
+            //     $question->quiz_id = $quizId;
+            //     $question->correct_answer = $questionData['correct_answer'];
+            //     $question->save();
                 
-                $questionId = $question->id;
-                // Retrieve the saved question to obtain the correct question_id
-                // $savedQuestion = QuizQuestion::latest()->limit(1)->first();
+            //     $questionId = $question->id;
+            //     // Retrieve the saved question to obtain the correct question_id
+            //     // $savedQuestion = QuizQuestion::latest()->limit(1)->first();
                 
-                // $questionId = $savedQuestion->id;
+            //     // $questionId = $savedQuestion->id;
             
-                $choice = new QuizChoices();
-                $choice->quiz_question_id  = $questionId; // Assign the question_id foreign key
-                $choice->option_a = $questionData['option_a'];
-                $choice->option_b = $questionData['option_b'];
-                $choice->option_c = $questionData['option_c'];
-                $choice->option_d = $questionData['option_d'];
-                $choice->save();
+            //     $choice = new QuizChoices();
+            //     $choice->quiz_question_id  = $questionId; // Assign the question_id foreign key
+            //     $choice->option_a = $questionData['option_a'];
+            //     $choice->option_b = $questionData['option_b'];
+            //     $choice->option_c = $questionData['option_c'];
+            //     $choice->option_d = $questionData['option_d'];
+            //     $choice->save();
                 
-            }
+            // }
             
 
             DB::commit(); // If no exception is thrown, commit the transaction
