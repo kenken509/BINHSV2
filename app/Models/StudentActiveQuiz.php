@@ -27,7 +27,7 @@ class StudentActiveQuiz extends Model
         });
     }
 
-
+    
     public function sentQuiz()
     {
         return $this->belongsTo(SentQuiz::class, 'sent_quizzes_id ', 'id');

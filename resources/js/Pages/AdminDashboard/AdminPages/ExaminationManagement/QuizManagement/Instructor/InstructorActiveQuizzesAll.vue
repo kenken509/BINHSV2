@@ -58,9 +58,9 @@
                        <td  v-if="instructorSection.id === quiz.section_id" scope="row" class="px-6 py-4 font-medium text-gray-900 ">
                            {{ formatDate(quiz.end_date) }}
                        </td>
-                       <td class=" text-center ">
-                            <span class="pi pi-eye text-green-600 scale-150 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Grade Info'" @click="handleshowQuizInfo(quiz.id)"></span>
-                        </td>
+                       <td v-if="instructorSection.id === quiz.section_id" class=" text-center ">
+                            <span class="pi pi-eye text-green-600 scale-150 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Quiz info'" @click="handleshowQuizInfo(quiz.id)"></span>
+                       </td>
                        
                        <!-- <td  v-if="instructorSection.id === quiz.section_id">
                            <div class="flex px-6  space-x-6 ">
@@ -132,7 +132,7 @@
                             <hr class="print-hidden-answer border-b-2">
                             <div v-for="(question,index) in quiz.quiz.question" :key="question.id" class="my-2 option-container-1">
                                 <div class="question-container"> {{ index+1 }}. <span >{{ question.question }}</span> </div>
-                                <div class="print-hidden-answer">Correct Answer : <span class="text-green-500">{{ question.correct_answer }}  asdfasdf</span> </div> 
+                                <div class="print-hidden-answer">Correct Answer : <span class="text-green-500">{{ question.correct_answer }}  </span> </div> 
                                 <div class="ml-10 option-container">
                                     <div>A. {{ question.choices.option_a }}</div> 
                                     <div>B. {{ question.choices.option_b }}</div> 

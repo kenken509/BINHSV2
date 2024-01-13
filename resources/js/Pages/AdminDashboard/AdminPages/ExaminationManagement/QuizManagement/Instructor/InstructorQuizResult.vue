@@ -2,9 +2,9 @@
     <DashboardLayout :user="user" >
         <div class=" flex flex-col w-full md:flex-row justify-between items-center border-bot-only border-gray-600 shadow-md mb-4 py-4 px-2">
            <span class=" text-[20px] font-bold text-gray-500">Quizzes Results Page</span>  
-            <form @submit.prevent="submit" class="w-full md:w-[300px]">
+            <!-- <form @submit.prevent="submit" class="w-full md:w-[300px]">
                 <Dropdown  v-model="selectedSection" :options="instructorHandledSection" optionLabel="name" placeholder="Sort by section" class="w-full md:w-14rem " />
-            </form> 
+            </form>  -->
        
        </div>
       

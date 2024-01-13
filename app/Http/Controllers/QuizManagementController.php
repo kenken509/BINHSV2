@@ -419,7 +419,7 @@ class QuizManagementController extends Controller
     public function showActiveQuiz()
     {
         $currentDate = Carbon::now(); // Get the current date
-
+        
         $quizzes = SentQuiz::with(['quiz' => function ($query) {
             $query->with(['question' => function ($query) {
                 $query->with('choices')->inRandomOrder();

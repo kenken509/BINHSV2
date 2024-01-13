@@ -147,7 +147,7 @@ class AdminDashboardController extends Controller
             'usersData'                 => $usersData,
             'windowsMonthlyDownloads'   => $windowsMonthlyDownloads,
             'androidMonthlyDownloads'   => $androidMonthlyDownloads,
-            'instructorTopTen'          => $instructorTopTen,
+            'instructorTopTen'          => '', //$instructorTopTen
         ]); 
      }
  

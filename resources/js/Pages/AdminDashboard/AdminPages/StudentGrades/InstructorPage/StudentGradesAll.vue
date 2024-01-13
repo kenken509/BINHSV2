@@ -60,7 +60,7 @@
                 </thead>
                 <tbody v-for="grade in currentPageItems" :key="grade.id">
                     <tr  class="bg-white border-b ">
-             
+                        
                         <td scope="row" class=" py-4 font-medium text-gray-900 text-center ">
                             {{ grade.student.student_number }}
                         </td>
@@ -80,7 +80,7 @@
                             {{ grade.third_grading }}
                         </td>
                         <td scope="row" class=" py-4 font-medium text-gray-900 text-center border-r-[1px] border-gray-500">
-                            {{ grade.fourth_grading }}
+                            {{ grade.fourth_grading }} 
                         </td>
                         <td  scope="row" class=" py-4 font-medium text-gray-900 text-center ">
                             <span class="text-red-500" v-if="grade.fourth_grading < 1">
@@ -95,11 +95,11 @@
                                 pending 
                             </span>
                             <span v-else>
-                                dev data
+                                dev data 
                             </span>
                         </td>
                         <td class=" text-center ">
-                            <span class="pi pi-eye text-green-600 scale-150 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Grade Info'" @click="handleGradeInfoModal(grade.id)"></span>
+                            <span class="pi pi-eye text-green-600 scale-150 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Grade Info'" @click="handleGradeInfoModal(grade.student.id)"></span>
                         </td>
                     </tr>
                 </tbody>
@@ -154,76 +154,75 @@
                         <div class="w-full mt-2">
                             <hr class="border-t-2 border-gray-400">
                         </div>
-                        <div v-for="student in currentPageItems"  class=" overflow-x-auto shadow-md rounded-lg table-div-container">  
-                        <div  v-if="(student.id === selectedStudentGradeId)" >
-                                <div class="p-2">
-                                    <div class="flex flex-col md:flex-row justify-between text-gray-700 text-[20px] my-2 student-info-container">
-                                        <span>Name: {{ student.student.lName }}, {{ student.student.fName }}</span>
-                                        <span>Section: {{ student.student.section.name }}</span>
-                                    </div>
-                                    <table v-for="quizzes in student.student.student_active_quiz" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
-                                        <thead class="text-xs text-gray-200 uppercase bg-green-700 table-header ">
-                                            <tr  >
-                                                <th scope="col" class="px-6 py-3 text-center">
-                                                    ID#
-                                                </th>
-                                                <th scope="col" class="px-6 py-3 text-center">
-                                                    title
-                                                </th>
-                                                <th scope="col" class="px-6 py-3 text-center">
-                                                    grading period
-                                                </th>
+                        <div  class=" overflow-x-auto shadow-md rounded-lg table-div-container">  
+                            
+                            <div   >
+                                    
+                                    <div class="p-2">
+                                        <div class="flex flex-col md:flex-row justify-between text-gray-700 text-[20px] my-2 student-info-container">
+                                            <!-- <span>Name: {{ student.student.lName }}, {{ student.student.fName }}</span>
+                                            <span>Section: {{ student.student.section.name }}</span> -->
+                                        </div>
+                                        <table  class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
                                                 
-                                                <th scope="col" class="px-6 py-3 text-center">
-                                                    date taken
-                                                </th>
-                                                <th scope="col" class="px-6 py-3 text-center">
-                                                    items
-                                                </th>
-                                                <th scope="col" class="px-6 py-3 text-center">
-                                                    score
-                                                </th>
-                                                <th scope="col" class="px-6 py-3 text-center">
-                                                    grade
-                                                </th>
-                                                
-                                                <th scope="col" class="px-6 py-3 text-center">
-                                                    status
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        
-                                            <td  scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
-                                                {{ quizzes.id }}
-                                            </td>
-                                            <td  scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
-                                                {{ quizzes.quiz.title }}
-                                            </td>
-                                            <td  scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
-                                                {{ quizzes.grading_period }}
-                                            </td>
+                                                <thead class="text-xs text-gray-200 uppercase bg-green-700 table-header ">
+                                                    <tr  >
+                                                        
+                                                        <th scope="col" class="px-6 py-3 text-center">
+                                                            title
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center">
+                                                            grading period
+                                                        </th>
+                                                        
+                                                        <th scope="col" class="px-6 py-3 text-center">
+                                                            date taken
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center">
+                                                            items
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center">
+                                                            score
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-center">
+                                                            grade
+                                                        </th>
+                                                        
+                                                        <th scope="col" class="px-6 py-3 text-center">
+                                                            status
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody  v-for="quizzes in  studentData.studentQuizInfo " >
+                                                    <td  v-if="quizzes.student_id === selectedStudentGradeId" scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
+                                                        {{ quizzes.quiz.title }}
+                                                    </td>
+                                                    <td v-if="quizzes.student_id === selectedStudentGradeId" scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
+                                                        {{ quizzes.grading_period }}
+                                                    </td>
+                                                    
+                                                    <td v-if="quizzes.student_id === selectedStudentGradeId" scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
+                                                        {{ dateFormat(quizzes.updated_at)  }}
+                                                    </td>
+                                                    
+                                                    <td v-if="quizzes.student_id === selectedStudentGradeId" scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
+                                                        {{ quizzes.quiz.question.length }}
+                                                    </td>
+                                                    
+                                                    <td v-if="quizzes.student_id === selectedStudentGradeId" scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
+                                                        {{ quizzes.quiz_score  }}
+                                                    </td>
+                                                    <td v-if="quizzes.student_id === selectedStudentGradeId" scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
+                                                        {{ quizzes.quiz_grade  }}
+                                                    </td>
+                                                    <td v-if="quizzes.student_id === selectedStudentGradeId" scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
+                                                        {{ quizzes.status  }}
+                                                    </td> 
+                                                </tbody>
                                             
-                                            <td  scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
-                                                {{ dateFormat(quizzes.updated_at)  }}
-                                            </td>
-                                            <td  scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
-                                                {{ quizzes.quiz.question.length }}
-                                            </td>
-                                            <td  scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
-                                                {{ quizzes.quiz_score  }}
-                                            </td>
-                                            <td  scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
-                                                {{ quizzes.quiz_grade  }}
-                                            </td>
-                                            <td  scope="row" class="px-6 py-4 font-medium text-gray-900 text-center ">
-                                                {{ quizzes.status  }}
-                                            </td>
-
-                                        </tbody>
-                                    </table>
-                                </div> <!--here-->
-                        </div>
+                                        </table>
+                                    </div> <!--here-->
+                            </div>
                         </div>
                     </div> 
                     <template #footer>
@@ -265,17 +264,19 @@ const user = usePage().props.user;
 
 const studentData = defineProps({
     studentGrades:Array,
+    studentQuizInfo:Array,
 })
 
+
 onMounted(()=>{
-    filteredData.value = studentData.studentGrades
+    //filteredData.value = studentData.studentGrades
     pageNumbers.length = totalPages.value;
 })
 
 
 // search field logic
 const searchField = ref(null);
-const filteredData = ref([])
+const filteredData = ref(studentData.studentGrades)
 
 
 

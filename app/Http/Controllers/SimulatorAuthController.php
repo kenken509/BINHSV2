@@ -68,7 +68,7 @@ class SimulatorAuthController extends Controller
     public function activeQuizGrade(Request $request)
     {
         //dd($request);
-        //id
+        //id  << student id
         //quiz_id
         //quiz_score
         //quiz_grade
