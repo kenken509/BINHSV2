@@ -33,14 +33,14 @@ class SimulatorAuthController extends Controller
             // Authentication successful
             $user = $exist;
             
-            $activeQuizzes = StudentActiveQuiz::where('student_id', '=', $user->id)
-                            ->where('status', '=', 'pending')
-                            ->with(['quiz' => function ($query) {
-                                $query->with(['question' => function  ($query) {
-                                    $query->with('choices')->inRandomOrder();
-                                }]);
-                            }])
-                            ->latest()->get();
+            // $activeQuizzes = StudentActiveQuiz::where('student_id', '=', $user->id)
+            //                 //->where('status', '=', 'pending')
+            //                 ->with(['quiz' => function ($query) {
+            //                     $query->with(['question' => function  ($query) {
+            //                         $query->with('choices')->inRandomOrder();
+            //                     }]);
+            //                 }])
+            //                 ->latest()->get();
             // query student active quiz;
 
             return response()->json(['message' => 'Login successfully!!!', 'user' => $user, 'activeQuizzes' => $activeQuizzes], 200);
@@ -54,7 +54,7 @@ class SimulatorAuthController extends Controller
     {
         
         $activeQuizzes = StudentActiveQuiz::where('student_id', '=', $id)
-                            // ->where('status', '=', 'pending')
+                            ->where('status', '=', 'pending')
                             ->with(['quiz' => function ($query) {
                                 $query->with(['question' => function  ($query) {
                                     $query->with('choices')->inRandomOrder();
