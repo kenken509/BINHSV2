@@ -86,11 +86,11 @@ class QuizManagementController extends Controller
 
     public function store(Request $request){
        
-        dd('im here');
-
+        
+        dd($request);
         try {
             DB::beginTransaction();
-    
+            
             $questionsArray = $request->questions;
         
             $currentSchoolYear = SchoolYear::first();
