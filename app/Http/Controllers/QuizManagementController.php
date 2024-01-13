@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Exception;
 use App\Models\Quiz;
 use App\Models\User;
 use App\Models\Section;
@@ -88,11 +89,13 @@ class QuizManagementController extends Controller
        
         
         dd($request);
+        
         try {
             DB::beginTransaction();
             
             $questionsArray = $request->questions;
-        
+            
+            
             $currentSchoolYear = SchoolYear::first();
 
             $currentSchoolYear = $currentSchoolYear->year;
@@ -107,7 +110,8 @@ class QuizManagementController extends Controller
             ],[
                 'questions'     => 'Must have at least 1 question!'
             ]);
-
+            
+            dd('validated');
             if($validate)
             {
             
@@ -128,6 +132,7 @@ class QuizManagementController extends Controller
                 
                 foreach ($questionsArray as $questionData) 
                 {
+                    
                     $question = new QuizQuestion();
                     $question->question = $questionData['question'];
                     $question->quiz_id = $quizId;
@@ -153,7 +158,7 @@ class QuizManagementController extends Controller
 
             DB::commit(); // If no exception is thrown, commit the transaction
             return redirect()->route('quiz.show')->with('success', 'Successfully Added New Quiz');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack(); // If an exception occurs, roll back the transaction
             return redirect()->back()->with('error', 'Failed to add new quiz. Error: ' . $e->getMessage());
         }
