@@ -54,7 +54,7 @@ class SimulatorAuthController extends Controller
     {
         
         $activeQuizzes = StudentActiveQuiz::where('student_id', '=', $id)
-                            ->where('status', '=', 'pending')
+                            //->where('status', '=', 'pending')
                             ->with(['quiz' => function ($query) {
                                 $query->with(['question' => function  ($query) {
                                     $query->with('choices')->inRandomOrder();
