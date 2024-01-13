@@ -7,6 +7,7 @@
             </div>
         </div>
         <div v-if="$page.props.flash.success" class="bg-green-300 mb-2 p-1 rounded-md text-gray-600">{{ $page.props.flash.success  }} </div>
+        <div v-if="$page.props.flash.error" >{{ errorMessage($page.props.flash.error) }} </div>
 
         <div>
             <form @submit.prevent="submit">
@@ -532,5 +533,18 @@ const confirmSubmission = ()=>{
             )
         }
     })
+}
+
+function errorMessage(message) {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: message + '!',
+    allowOutsideClick:false,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      //flashClear.get(route('clear.flash.messages'), { preserveScroll: true });
+    }
+  })
 }
 </script>
