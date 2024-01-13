@@ -52,7 +52,7 @@ class QuizManagementController extends Controller
                 ->withCount('question')->latest()->get();
             
             
-            
+            dd($quizzes);
             return inertia('AdminDashboard/AdminPages/ExaminationManagement/QuizManagement/Instructor/InstructorQuizAll', [
                 'quizzes' => $quizzes,
                 'instructorSections' => $sections,
