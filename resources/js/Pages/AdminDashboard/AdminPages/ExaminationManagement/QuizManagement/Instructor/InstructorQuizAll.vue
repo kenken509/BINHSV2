@@ -18,9 +18,9 @@
             <table  class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                
                 <thead class="text-xs text-gray-200 uppercase bg-green-700  ">
-                    <tr>{{ quizzes.quizzes.setnQuiz }}
+                    <tr>
                         <th scope="col" class="px-6 py-3">
-                            ID#sss
+                            ID#
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Title
@@ -71,7 +71,7 @@
                                 
                                 <div  v-if="isNotActiveQuiz(quiz.id)" class=" flex space-x-4 ">
                                     <span  class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Delete Question'" @click="confirmDelete(quiz.id)"></span>
-                                <!-- <Link :href="route('quiz.delete', {id: quiz.id})" class="cursor-pointer" v-tooltip.left="'Delete Question'" as="button" method="delete" ><span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150"></span></Link> -->
+                                
                                     <Link :href="route('quiz.edit', {id:quiz.id})" class="cursor-pointer hover:dark:scale-125" v-tooltip.right="'Edit'" ><span class="pi pi-user-edit text-green-600 scale-110 hover:dark:scale-150"></span></Link>
                                 </div>
                                 
@@ -316,16 +316,28 @@ function showQuizModal(quizId)
 }
 
 const done = ref(null);
-function quizIsDone(quizId)
-{
-    selectedSentQuiz.value = quizzes.sentQuiz.filter((quiz)=> quiz.quiz_id === quizId);
-    done.value = quizzes.instructorSections.filter((section) =>{
-        return selectedSentQuiz.value.every((quiz)=> quiz.section_id !== section.id )
-    })
+// function quizIsDone2(quizId)
+// {
+//     selectedSentQuiz.value = quizzes.sentQuiz.filter((quiz)=> quiz.quiz_id === quizId);
+//     done.value = quizzes.instructorSections.filter((section) =>{
+//         return selectedSentQuiz.value.every((quiz)=> quiz.section_id !== section.id )
+//     })
 
-    // Return true if the quiz is done, false otherwise
-    return done.value.length === 0;
-}
+//     // Return true if the quiz is done, false otherwise
+//     return done.value.length === 0;
+// }
+
+const quizIsDone = computed(() => {
+    return (quizId) => {
+        const sentQuiz = quizzes.sentQuiz.filter((quiz) => quiz.quiz_id === quizId);
+        const doneSections = quizzes.instructorSections.filter((section) =>
+            sentQuiz.every((sent) => sent.section_id !== section.id)
+        );
+
+        // Return true if the quiz is done, false otherwise
+        return doneSections.length === 0;
+    };
+});
 
 
 
