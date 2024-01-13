@@ -86,7 +86,7 @@ class QuizManagementController extends Controller
 
     public function store(Request $request){
        
-        
+        dd('im here');
 
         try {
             DB::beginTransaction();
