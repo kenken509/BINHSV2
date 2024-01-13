@@ -12,8 +12,8 @@
             </div> 
         </div>
        
-        <div v-if="$page.props.flash.success">{{ successMessage($page.props.flash.success)  }} </div>
-        <div v-if="$page.props.flash.error">{{ errorMessage($page.props.flash.error)  }} </div>
+        <!-- <div v-if="$page.props.flash.success">{{ successMessage($page.props.flash.success)  }} </div>
+        <div v-if="$page.props.flash.error">{{ errorMessage($page.props.flash.error)  }} </div> -->
         <div class=" overflow-x-auto shadow-md sm:rounded-lg">
             <table  class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                

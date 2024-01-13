@@ -152,7 +152,7 @@ class QuizManagementController extends Controller
             
 
             DB::commit(); // If no exception is thrown, commit the transaction
-            dd('nakarating dto');
+            
             return redirect()->route('quiz.show')->with('success', 'Successfully Added New Quiz');
         } catch (Exception $e) {
             DB::rollBack(); // If an exception occurs, roll back the transaction
