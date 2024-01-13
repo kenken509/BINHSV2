@@ -44,7 +44,7 @@
                                 <InputError :error="form.errors.duration"/>
                         </div>
                         <div class="w-full col-span-2 mb-4">
-                            <Button label="Submit" type="submit" class="w-full"/>
+                            <Button label="Submit" type="submit" :disabled="form.processing" class="w-full"/>
                         </div>
                     </div>
                     <!--QUIZ DETAILS-->

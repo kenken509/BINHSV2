@@ -36,21 +36,24 @@ class QuizManagementController extends Controller
         if($loggedUser == 'instructor')
         {
             $insturctorSubject = Auth::user()->subject_id;
+            
             $instructor = Auth::user()->id;
+            
             $sentQuiz = SentQuiz::all();
 
             $user = Auth::user();
             $sections = $user->instructorSections;
+        
 
-            //dd($sections);
+            $quizzes = Quiz::where('subject_id', '=', $insturctorSubject)
+                ->where('created_by',$instructor)
+                ->with(['question.choices','subject','sentQuiz'])
+                ->withCount('question')->latest()->get();
             
-           
-
+            
+            
             return inertia('AdminDashboard/AdminPages/ExaminationManagement/QuizManagement/Instructor/InstructorQuizAll', [
-                'quizzes' => Quiz::where('subject_id', '=', $insturctorSubject)
-                                ->where('created_by',$instructor)
-                                ->with(['question.choices','subject','sentQuiz'])
-                                ->withCount('question')->latest()->get(),
+                'quizzes' => $quizzes,
                 'instructorSections' => $sections,
                 'sentQuiz'  => $sentQuiz,
             ]);
@@ -82,69 +85,78 @@ class QuizManagementController extends Controller
    
 
     public function store(Request $request){
-        //dd($request);
-        //dd($request->questions);
-        $questionsArray = $request->questions;
-        //dd($questionsArray);
-        $currentSchoolYear = SchoolYear::first();
-
-        $currentSchoolYear = $currentSchoolYear->year;
+       
         
 
-        $validate = $request->validate([
-            "subject_id"        => 'required',
-            "title"             => 'required',
-            "grading_period"    => 'required',
-            "duration"          => 'required',
-            "questions"         => 'required|array|min:1',
-        ],[
-            'questions'     => 'Must have at least 1 question!'
-        ]);
+        try {
+            DB::beginTransaction();
+    
+            $questionsArray = $request->questions;
+        
+            $currentSchoolYear = SchoolYear::first();
 
-        if($validate)
-        {
-           
-            $quiz                   = new Quiz();
-            $quiz->subject_id       = $request->subject_id;
-            $quiz->title            = $request->title;
-            $quiz->grading_period   = $request->grading_period;
-            $quiz->school_year      = $currentSchoolYear;
-            $quiz->duration         = $request->duration;
-            $quiz->created_by       = Auth::user()->id;
-            $quiz->save();
+            $currentSchoolYear = $currentSchoolYear->year;
+            
 
-            $quizId = $quiz->id;
-            
-            // $latestQuiz = Quiz::latest()->limit(1)->get();
-            
-            // $quizId = $latestQuiz[0]->id;
-            
-            foreach ($questionsArray as $questionData) 
+            $validate = $request->validate([
+                "subject_id"        => 'required',
+                "title"             => 'required',
+                "grading_period"    => 'required',
+                "duration"          => 'required',
+                "questions"         => 'required|array|min:1',
+            ],[
+                'questions'     => 'Must have at least 1 question!'
+            ]);
+
+            if($validate)
             {
-                $question = new QuizQuestion();
-                $question->question = $questionData['question'];
-                $question->quiz_id = $quizId;
-                $question->correct_answer = $questionData['correct_answer'];
-                $question->save();
-                
-                $questionId = $question->id;
-                // Retrieve the saved question to obtain the correct question_id
-                // $savedQuestion = QuizQuestion::latest()->limit(1)->first();
-                
-                // $questionId = $savedQuestion->id;
-               
-                $choice = new QuizChoices();
-                $choice->quiz_question_id  = $questionId; // Assign the question_id foreign key
-                $choice->option_a = $questionData['option_a'];
-                $choice->option_b = $questionData['option_b'];
-                $choice->option_c = $questionData['option_c'];
-                $choice->option_d = $questionData['option_d'];
-                $choice->save();
-                
-            }
-        }
+            
+                $quiz                   = new Quiz();
+                $quiz->subject_id       = $request->subject_id;
+                $quiz->title            = $request->title;
+                $quiz->grading_period   = $request->grading_period;
+                $quiz->school_year      = $currentSchoolYear;
+                $quiz->duration         = $request->duration;
+                $quiz->created_by       = Auth::user()->id;
+                $quiz->save();
 
-        return redirect()->route('quiz.show')->with('success', 'Successfully Added New Quiz');
+                $quizId = $quiz->id;
+                
+                // $latestQuiz = Quiz::latest()->limit(1)->get();
+                
+                // $quizId = $latestQuiz[0]->id;
+                
+                foreach ($questionsArray as $questionData) 
+                {
+                    $question = new QuizQuestion();
+                    $question->question = $questionData['question'];
+                    $question->quiz_id = $quizId;
+                    $question->correct_answer = $questionData['correct_answer'];
+                    $question->save();
+                    
+                    $questionId = $question->id;
+                    // Retrieve the saved question to obtain the correct question_id
+                    // $savedQuestion = QuizQuestion::latest()->limit(1)->first();
+                    
+                    // $questionId = $savedQuestion->id;
+                
+                    $choice = new QuizChoices();
+                    $choice->quiz_question_id  = $questionId; // Assign the question_id foreign key
+                    $choice->option_a = $questionData['option_a'];
+                    $choice->option_b = $questionData['option_b'];
+                    $choice->option_c = $questionData['option_c'];
+                    $choice->option_d = $questionData['option_d'];
+                    $choice->save();
+                    
+                }
+            }
+
+            DB::commit(); // If no exception is thrown, commit the transaction
+            return redirect()->route('quiz.show')->with('success', 'Successfully Added New Quiz');
+        } catch (\Exception $e) {
+            DB::rollBack(); // If an exception occurs, roll back the transaction
+            return redirect()->back()->with('error', 'Failed to add new quiz. Error: ' . $e->getMessage());
+        }
     }
 
     public function delete($id)
