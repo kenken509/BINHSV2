@@ -435,12 +435,23 @@ class QuizManagementController extends Controller
     {
         $currentDate = Carbon::now(); // Get the current date
         
+        $instructor = Auth::user();
+        $instructorHandledSections = $instructor->instructorSections->pluck('id');;
+        
+        
+        // $handledSection = User::fin
+        //query only the quiz with section _id included in $instructorHandledSections array
         $quizzes = SentQuiz::with(['quiz' => function ($query) {
             $query->with(['question' => function ($query) {
                 $query->with('choices')->inRandomOrder();
             }]);
-        }, 'section'])->whereDate('end_date', '<', $currentDate)->latest()->get();
+        }, 'section'])
+        ->whereIn('section_id', $instructorHandledSections)
+        ->whereDate('end_date', '<', $currentDate)
+        ->latest()
+        ->get();
         
+        //dd($quizzes);
         return inertia('AdminDashboard/AdminPages/ExaminationManagement/QuizManagement/Instructor/InstructorPastDueQuizzesAll',[
             'quizzes' => $quizzes,
         ]);
