@@ -88,7 +88,8 @@
                 TLE Department
                 </h6>
                 <p class="text-justify">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    The TLE (Technology and Livelihood Education) department focuses on equipping students with practical skills and knowledge in areas like technology, entrepreneurship, and vocational subjects to prepare them for real-world applications.
+                    TLE programs often include hands-on activities, workshops, and projects, allowing students to gain practical experience in fields such as electronics, woodworking, culinary arts, and computer technology. This approach helps students develop valuable skills for both further education and potential careers.
                 </p>
             </div>
             <div class="">
