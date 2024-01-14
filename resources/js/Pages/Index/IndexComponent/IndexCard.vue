@@ -7,8 +7,8 @@
             </div>
             <div v-if="post.newsPost" class="">
                 
-                <div class="border bg-black">
-                    <div class="flex justify-center items-center">
+                <div v-if="post.newsPost.filename" class="border bg-black">
+                    <div  class="flex justify-center items-center">
                         <img :src="'/storage/'+post.newsPost.filename" alt="error" class=" shadow-md"> 
                     </div>
                     

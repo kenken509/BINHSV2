@@ -1,6 +1,6 @@
 {
-  "_index.min-0a737e0a.js": {
-    "file": "assets/index.min-0a737e0a.js",
+  "_index.min-fee4ad7a.js": {
+    "file": "assets/index.min-fee4ad7a.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -157,9 +157,9 @@
       "assets/app-44ea8790.css"
     ],
     "dynamicImports": [
-      "_index.min-0a737e0a.js"
+      "_index.min-fee4ad7a.js"
     ],
-    "file": "assets/app-7971deff.js",
+    "file": "assets/app-cc2b1452.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }
