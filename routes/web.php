@@ -164,9 +164,13 @@ Route::controller(UserManagementController::class)->middleware(['isLoggedUser','
     Route::post('/admin/panel/user-update','userUpdate')->name('admin.userUpdate');
 
     //soft deletes
-    Route::get('admin/panel/user-archived/show', 'showArchivedUser')->name('admin.showArcivedUser');
+    Route::get('admin/panel/user-archived/all', 'showArchivedUser')->name('admin.showArcivedUser');
     Route::delete('/admin/panel/user-delete-permanently/{id}', 'userDeletePermanently')->name('admin.userDeletePermanently');
     Route::patch('/admin/panel/user-restore/{id}', 'restoreUser')->name('admin.restoreUser');
+
+    //deactivated user
+    Route::patch('/admin/panel/user-deactivated/{id}', 'deactivateUser')->name('admin.deactivateUser');
+    Route::get('/admin/panel/user-deactivated/all', 'deactivatedUserAll')->name('admin.deactivatedUserAll');
 });
 
 Route::controller(UserProfileController::class)->middleware(['isLoggedUser','verified'])->group(function(){

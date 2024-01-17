@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <!--SEARCHED USER-->
-
+                
                 <!--ALL USERS-->
                 <div v-if="allUsersVisible" class="overflow-x-auto sm:-mx-6 lg:-mx-8 mt-4 overflow-x">
                     <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -148,6 +148,7 @@
                                             
                                         
                                             <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Delete User'" @click="deleteConfirmation(user.id)"></span>
+                                            <span class="pi pi-ban text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Deactivate User'" @click="deactivationConfirmation(user.id)"></span>
                                             <!-- <Link :href="route('admin.userDelete', {user: user.id})" class="cursor-pointer" v-tooltip.left="'Delete User'" as="button" method="delete" ><span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150"></span></Link> -->
                                             <!-- <Link :href="route('admin.editUser', {id:user.id} )" class="cursor-pointer hover:dark:scale-125" v-tooltip.right="'Edit User'" ><span class="pi pi-user-edit text-green-600 scale-110 hover:dark:scale-150"></span></Link> -->
                                             <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'View full info'" @click="openModal(user.id)" ></span>
@@ -429,6 +430,37 @@ function deleteConfirmation(userId)
     })
 }
 
+function deactivationConfirmation(userId)
+{
+    Swal.fire({
+        title:'Deactivation confirmation',
+        text:"Are you sure you want to deactivate this user?",
+        icon:'warning',
+        confirmButtonText:'Yes, deactivate it!',
+        cancelButtonText:'Cancel',
+        showCancelButton:true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        allowOutsideClick:false,
+        allowEscapeKey:false,
+    }).then((result)=>{
+        if(result.isConfirmed)
+        {
+            const userDisabledUrl = route('admin.deactivateUser', {id: userId});
+
+            router.patch(userDisabledUrl);
+        }
+
+        if(result.isDismissed)
+        {
+            Swal.fire({
+                title:'Canceled',
+                text:'Your action was canceled!',
+                icon:'error',
+            })
+        }
+    })
+}
 function successMessage(message)
 {
     Swal.fire({

@@ -36,7 +36,7 @@ return new class extends Migration
             $table->enum('role', ['admin','instructor','student','guest','xStudent'])->nullable();
             $table->String('school_year')->nullable();
             $table->string('student_number')->nullable();
-            $table->enum('isActive',[1,0])->nullable();
+            $table->enum('isActive',[1,0,2])->nullable(); //0=inactive, 1=active, 2=disabled,
             $table->unsignedBigInteger('subject_id')->nullable();
             $table->unsignedBigInteger('section_id')->nullable();
             $table->softDeletes(); // This adds the 'deleted_at' column

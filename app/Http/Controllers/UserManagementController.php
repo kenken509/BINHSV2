@@ -729,4 +729,23 @@ class UserManagementController extends Controller
         }
         
     }
+
+    public function deactivateUser($id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->isActive = 2;
+        $user->save();
+
+        return to_route('admin.showAllUsers')->with('success', 'User Successfully Deactivated. ');
+    }
+
+    public function deactivatedUserAll()
+    {
+        $deactivatedUsers = User::where('isActive',2)->get();
+
+        return inertia('AdminDashboard/AdminPages/UserManagement/UserDeactivatedAll',[
+            'deactivatedUsers' => $deactivatedUsers,
+        ]);
+    }
 }
