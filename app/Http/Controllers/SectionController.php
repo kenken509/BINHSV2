@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Exception;
 use App\Models\User;
 use App\Models\Section;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SectionController extends Controller
 {
@@ -33,29 +35,42 @@ class SectionController extends Controller
     public function store(Request $request){
         
         
-        //{"name":"32A1","subject_id":1}
+        
+        //{"name":"asdf","subject_id":2,"instructor_id":3,"maxStudents":20}
        // Validate the request data
         $validatedData = $request->validate([
             'name'          => 'required|unique:sections',
             'subject_id'    => 'required',
             'instructor_id' => 'required',
+            'maxStudents'   => 'required|numeric|min:10',
         ], [
             'name.unique' => 'Please enter a non-existing section.',
+            'maxStudents.min'  => 'The number of minimum students should be at least 10.',
         ]);
-
+        
         try {
+            // Start a database transaction
+            DB::beginTransaction();
             // Create a new Section instance
             $newSection = new Section();
             $newSection->name = $validatedData['name'];
             $newSection->subject_id = $validatedData['subject_id'];
+            $newSection->maxStudents = $validatedData['maxStudents'];
             $newSection->created_at = Carbon::now();
             $newSection->save();
 
             // Attach instructor to the section
             $newSection->instructors()->attach($validatedData['instructor_id']);
 
+            // Commit the transaction if all operations are successful
+            DB::commit();
+
             return redirect()->route('section.show')->with('success', 'Successfully added new section!');
         } catch (\Exception $e) {
+
+            // Rollback the transaction if an exception occurs
+            DB::rollBack();
+
             // Handle the exception, you might want to log or display an error message
             return $e;
         }
@@ -84,20 +99,38 @@ class SectionController extends Controller
             'name'          => 'required',
             'subject_id'    => 'required',
             'instructor_id' => 'required',
+            'maxStudents'   => 'required|numeric|min:10',
+        ],[
+            'maxStudents.min'  => 'The number of minimum students should be at least 10.',
         ]);
 
         if($data){
-            $section = Section::findOrFail($request->section_id);
+            try{
+                // Start a database transaction
+                DB::beginTransaction();
 
-            $section->name          = $request->name;
-            $section->subject_id    = $request->subject_id;
-            $section->updated_by    = Auth::user()->id;
-            $section->updated_at    = Carbon::now();
-            $section->save();
-            // update the pivot table with sync function
-            $section->instructors()->sync([$request->instructor_id]);
+                $section = Section::findOrFail($request->section_id);
 
-            return redirect()->route('section.show')->with('success', 'Successfully Updated');
+                $section->name          = $request->name;
+                $section->subject_id    = $request->subject_id;
+                $section->maxStudents    = $request->maxStudents;
+                $section->updated_by    = Auth::user()->id;
+                $section->updated_at    = Carbon::now();
+                $section->save();
+                // update the pivot table with sync function
+                $section->instructors()->sync([$request->instructor_id]);
+
+                // save database transaction
+                DB::commit();
+
+                return redirect()->route('section.show')->with('success', 'Successfully Updated');
+            } catch (Exception $e) {
+                 // Rollback the transaction if an exception occurs
+                DB::rollBack();
+
+                // Handle the exception, you might want to log or display an error message
+                return $e;
+            }
         }
 
         

@@ -46,6 +46,9 @@
                         <th v-if="sections.sections" scope="col" class="px-6 py-3 ">
                             Instructor
                         </th>
+                        <th v-if="sections.sections" scope="col" class="px-6 py-3 ">
+                            Max Students
+                        </th>
                         <th v-if="sections.sections" scope="col" class=" text-center px-6 py-3 ">
                             Students
                         </th>
@@ -70,6 +73,9 @@
                         
                         <td v-for="instructor in section.instructors" scope="row" class="px-6 py-4 font-medium text-gray-900  ">
                             {{ instructor.lName }}, {{  instructor.fName }}
+                        </td>
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-900  ">
+                            {{ section.maxStudents}}
                         </td>
                         <td class="text-center px-6 ">
                             <span class="pi pi-eye text-green-600 scale-150 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'View students'" @click="showStudentsModal(section.id)"></span>

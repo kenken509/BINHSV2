@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Section extends Model
 {
@@ -34,4 +35,10 @@ class Section extends Model
     {
         return $this->hasMany(User::class, 'section_id', 'id');
     }
+
+   // Use withCount to get the student count
+   public function studentCount()
+   {
+       return $this->student()->count();
+   }
 }

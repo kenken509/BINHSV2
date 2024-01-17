@@ -28,13 +28,23 @@
             <hr>
             <div class="my-5">Instructor: </div>
             
-            <div v-for="subject in section.subjects">
+            <div class="my-5" v-for="subject in section.subjects">
                
                 <div v-if="subject === selectedSubject">
                     <div>
                         <Dropdown  v-model="selectedInstructor" :options="existingInstructors" optionLabel="lName" placeholder="Select a Instructor" class="w-full md:w-14rem "  />
                     </div>
                     <InputError :error="form.errors.instructor_id"/>
+                </div>
+            </div>
+            <div >
+                <div class="mb-5">Maximum number of students: </div>
+                <div>
+                    <span class="p-float-label">
+                        <InputNumber id="maxStudents" v-model="form.maxStudents" class="w-full"/>
+                        <label for="maxStudents">Max number of students</label>
+                    </span>
+                    <InputError :error="form.errors.maxStudents"/>
                 </div>
             </div>
             <div class="w-full mt-6 ">
@@ -70,6 +80,7 @@ const form = useForm({
     name:section.section.name,
     subject_id:section.section.subject.id,
     instructor_id:section.section.instructors[0].id,
+    maxStudents:section.section.maxStudents,
 })
 
 const hasReloaded = localStorage.getItem('hasReloaded');
@@ -101,6 +112,11 @@ onMounted(()=>{
             }
         });
     
+        // form.section_id=section.section.id
+        // form.name=section.section.name
+        // form.subject_id=section.section.subject.id
+        // form.instructor_id=section.section.instructors[0].id
+        // form.maxStudents=section.section.maxStudents
     
     //console.log(existingInstructors)
 })
@@ -128,6 +144,7 @@ watch(selectedInstructor, (val)=>{
 })
 const submit = ()=> form.post(route('section.update',{
     preserveScroll:true,
+    preserveState:true,
 }))
 
 // alert codes

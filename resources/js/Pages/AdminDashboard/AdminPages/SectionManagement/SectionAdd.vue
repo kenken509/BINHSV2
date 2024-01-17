@@ -19,20 +19,35 @@
             </div>
                    
             <div class="mb-5">Strand: </div>
-            <div>
+            <div class="mb-5">
                 <Dropdown  v-model="selectedSubject" :options="props.subjects" optionLabel="name" placeholder="Select a Subject" class="w-full md:w-14rem "  />
                 <InputError :error="form.errors.subject_id"/>
             </div>
             
-            <div class="mb-5">Instructor: </div>
-            <div v-for="subject in props.subjects">
-                <div v-if="subject === selectedSubject">
-                    <div>
-                        <Dropdown  v-model="selectedInstructor" :options="existingInstructors" optionLabel="lName" placeholder="Select a Instructor" class="w-full md:w-14rem "  />
+            <div v-if="selectedSubject">
+                <div class="mb-5">Instructor: </div>
+                <div class="mb-5" v-for="subject in props.subjects">
+                    <div v-if="subject === selectedSubject">
+                        <div>
+                            <Dropdown  v-model="selectedInstructor" :options="existingInstructors" optionLabel="lName" placeholder="Select a Instructor" class="w-full md:w-14rem "  />
+                        </div>
+                        <InputError :error="form.errors.instructor_id"/>
                     </div>
-                    <InputError :error="form.errors.instructor_id"/>
                 </div>
             </div>
+            
+
+            <div >
+                <div class="mb-5">Maximum number of students: </div>
+                <div>
+                    <span class="p-float-label">
+                        <InputNumber id="maxStudents" v-model="form.maxStudents" class="w-full"/>
+                        <label for="maxStudents">Max number of students</label>
+                    </span>
+                    <InputError :error="form.errors.maxStudents"/>
+                </div>
+            </div>
+            
             <div class="w-full mt-6 ">
                 <Button label="Add" class="w-full" type="submit"/>
             </div>
@@ -67,6 +82,7 @@ const form = useForm({
     name:null,
     subject_id:null,
     instructor_id:null,
+    maxStudents:null,
 })
 
 watch(selectedSubject,(val)=>{

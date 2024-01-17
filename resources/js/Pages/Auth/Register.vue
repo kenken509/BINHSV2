@@ -27,7 +27,8 @@
             <div class="flex justify-center">
                 <span class="text-[12px]">School Year: {{  currentSchoolYear }}</span>
             </div>
-            <!--input group-->
+            <!--input group {{ subject.subjects }} -->
+            
             <div >
                 <form class="px-8" @submit.prevent="submit">
                     <div v-if="selectedRole === 'student'">
@@ -128,6 +129,7 @@ const subject = defineProps({
 })
 const user = computed(() => usePage().props.user);
 
+const testArray = ref(['a','b','c','c']);
 const selectedSubject = ref(null);
 const selectedRole = ref(null);
 const selectedSection = ref(null);
@@ -139,7 +141,13 @@ watch(selectedSubject, (val) =>{
     subject.subjects.forEach((subject)=>{
         if(subject.id === val.id)
         {
-            subject.section.forEach((sec)=> availableSection.value.push(sec))
+            subject.section.forEach((sec)=>{
+                // Check if the current section has available slots
+                if (sec.student.length < sec.maxStudents) {
+                    
+                    availableSection.value.push(sec);
+                }
+            })
         }
     })
     

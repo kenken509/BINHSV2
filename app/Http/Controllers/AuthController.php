@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Models\User;
 use App\Models\Subject;
 use App\Models\SchoolYear;
@@ -92,7 +93,8 @@ class AuthController extends Controller
     
     public function showRegistration(){
 
-        $subjects = Subject::with('section')->get();
+        $subjects = Subject::with('section.student')->get();
+        
         return inertia('Auth/Register', [
             'subjects' => $subjects,
         ]);
