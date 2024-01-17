@@ -690,13 +690,43 @@ class UserManagementController extends Controller
         
         // Check if the userToDelete is not null
         if ($userToDelete) {
-            
+
             $userToDelete->forceDelete();
 
             return to_route('admin.showArcivedUser')->with('success', 'Successfuly Deleted Permanently');
             
         } else {
-            return to_route('admin.showArcivedUser')->with('error', 'Error');
+            return to_route('admin.showArcivedUser')->with('error', 'Failed to delete');
         }
+    }
+
+    public function restoreUser($id)
+    {
+        $user = User::withTrashed()->find($id);
+
+        $currentSchoolYear = SchoolYear::first();
+        $currentSchoolYear = $currentSchoolYear->year;
+        
+        // Check if the userToDelete is not null
+        if ($user) {
+            
+            if($user->role == 'student')
+            {
+                $user->school_year = $currentSchoolYear;
+                $user->save();
+
+                $user->restore();
+            }
+            else
+            {
+                $user->restore();
+            }
+            
+            return to_route('admin.showArcivedUser')->with('success', 'Successfuly Restored User');
+            
+        } else {
+            return to_route('admin.showArcivedUser')->with('error', 'Fail to restore');
+        }
+        
     }
 }

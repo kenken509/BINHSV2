@@ -68,6 +68,7 @@
                                     <td class="whitespace-nowrap px-6 py-4">
                                         <div class=" space-x-6" >
                                             <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Delete User Permanently'" @click="deleteConfirmation(user.id)"></span>
+                                            <span class="pi pi-refresh text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Restore User'" @click="restoreConfirmation(user.id)" ></span>
                                             <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'View full info'" @click="openModal(user.id)" ></span>
                                         </div>
                                         
@@ -128,6 +129,38 @@ function deleteConfirmation(userId)
             const userDeleteUrl = route('admin.userDeletePermanently', {id: userId});
 
             router.delete(userDeleteUrl);
+        }
+
+        if(result.isDismissed)
+        {
+            Swal.fire({
+                title:'Canceled',
+                text:'Your action was canceled!',
+                icon:'error',
+            })
+        }
+    })
+}
+
+function restoreConfirmation(userId)
+{
+    Swal.fire({
+        title:'Restoration confirmation',
+        text:"Are you sure you want to restore this user?",
+        icon:'warning',
+        confirmButtonText:'Yes, restore it!',
+        cancelButtonText:'Cancel',
+        showCancelButton:true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        allowOutsideClick:false,
+        allowEscapeKey:false,
+    }).then((result)=>{
+        if(result.isConfirmed)
+        {
+            const userRestoreUrl = route('admin.restoreUser', {id: userId});
+
+            router.patch(userRestoreUrl);
         }
 
         if(result.isDismissed)
