@@ -669,10 +669,34 @@ class UserManagementController extends Controller
                 
             $user->delete();
             return redirect()->back()->with('success', 'Deleted Successfully');
-        }
-        
-        
+        }   
     }
 
-    
+    //soft deletes
+    public function showArchivedUser()
+    {
+        $archivedUsers = User::onlyTrashed()->orderBy('deleted_at','desc')->get();
+        return inertia('AdminDashboard/AdminPages/UserManagement/UserArchivedAll',[
+            'archivedUsers' => $archivedUsers,
+        ]);
+    }
+    public function userDeletePermanently($id)
+    {
+       
+
+        $userToDelete = User::withTrashed()->find($id);
+
+        $archivedUsers = User::onlyTrashed()->orderBy('deleted_at','desc')->get();
+        
+        // Check if the userToDelete is not null
+        if ($userToDelete) {
+            
+            $userToDelete->forceDelete();
+
+            return to_route('admin.showArcivedUser')->with('success', 'Successfuly Deleted Permanently');
+            
+        } else {
+            return to_route('admin.showArcivedUser')->with('error', 'Error');
+        }
+    }
 }

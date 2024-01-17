@@ -39,6 +39,7 @@ return new class extends Migration
             $table->enum('isActive',[1,0])->nullable();
             $table->unsignedBigInteger('subject_id')->nullable();
             $table->unsignedBigInteger('section_id')->nullable();
+            $table->softDeletes(); // This adds the 'deleted_at' column
             $table->rememberToken();
             // accountability
             $table->integer('created_by')->nullable();

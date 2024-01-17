@@ -27,65 +27,65 @@
                     <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                         <div class="overflow-x-scroll">
                             <table class="min-w-full text-left text-sm font-light">
-                            <thead class="border-b font-medium dark:border-neutral-500 bg-gray-300">
-                                <tr>
-                                <th scope="col" class="px-6 py-4">ID #</th>
-                                <th scope="col" class="px-6 py-4">Picture</th>
-                                <th scope="col" class="px-6 py-4">Full name</th>
-                                <th scope="col" class="px-6 py-4">Email</th>
-                                <th scope="col" class="px-6 py-4">Role</th>
-                                <th scope="col" class="px-6 py-4">Added by:</th>
-                                <th scope="col" class="px-6 py-4">Updated by:</th>
-                                <th scope="col" class="px-6 py-4">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                v-for="user in filteredUser"
-                                :key="user.id"
-                                
-                                class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-gray-300">
+                                <thead class="border-b font-medium dark:border-neutral-500 bg-gray-300">
+                                    <tr>
+                                    <th scope="col" class="px-6 py-4">ID #</th>
+                                    <th scope="col" class="px-6 py-4">Picture</th>
+                                    <th scope="col" class="px-6 py-4">Full name</th>
+                                    <th scope="col" class="px-6 py-4">Email</th>
+                                    <th scope="col" class="px-6 py-4">Role</th>
+                                    <th scope="col" class="px-6 py-4">Added by:</th>
+                                    <th scope="col" class="px-6 py-4">Updated by:</th>
+                                    <th scope="col" class="px-6 py-4">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                    v-for="user in filteredUser"
+                                    :key="user.id"
                                     
-                                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{ user.id}}</td>
-                                    <td class="whitespace-nowrap px-6 py-4">
+                                    class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-gray-300">
                                         
-                                        <Image :src="user.image ? appUrl+user.image:'/storage/Images/default.png'" alt="Image" width="60" preview>
-                                            <template #indicator>
-                                                <i class="pi pi-eye"></i>
-                                            </template>
-                                        </Image>     
-                                    </td>  
-                                    
-                                    <td class="whitespace-nowrap px-6 py-4"><span v-if="user.lName">{{ toUpperFirst(user.lName)  }}</span>, <span v-if="user.fName">{{ toUpperFirst(user.fName)  }}</span> <span v-if="user.mName">{{ user.mName.substring(0,1).toUpperCase() }}</span>.</td>
-                                    <td class="whitespace-nowrap px-6 py-4">{{ user.email }} </td>
-                                    <td class="whitespace-nowrap px-6 py-4">{{ user.role }}</td>
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        
-                                        <div v-for="(creator,index) in users.data" :key="index">
-                                            <p v-if="creator.id === user.created_by">{{creator.role }} {{ creator.fName }}</p>
-                                        </div>
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        
-                                        <div v-for="(editor,index) in users.data" :key="index">
-                                            <p v-if="editor.id === user.updated_by">{{editor.role }} {{ editor.fName }}</p>
-                                        </div>
-                                    </td>
-
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        <div class=" space-x-6" >
-                                            <div v-if="$page.props.flash.success"><Toast position="top-left" /> </div>
+                                        <td class="whitespace-nowrap px-6 py-4 font-medium">{{ user.id}}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">
                                             
+                                            <Image :src="user.image ? appUrl+user.image:'/storage/Images/default.png'" alt="Image" width="60" preview>
+                                                <template #indicator>
+                                                    <i class="pi pi-eye"></i>
+                                                </template>
+                                            </Image>     
+                                        </td>  
                                         
-                                            <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer"  @click="deleteConfirmation(user.id)"></span>
+                                        <td class="whitespace-nowrap px-6 py-4"><span v-if="user.lName">{{ toUpperFirst(user.lName)  }}</span>, <span v-if="user.fName">{{ toUpperFirst(user.fName)  }}</span> <span v-if="user.mName">{{ user.mName.substring(0,1).toUpperCase() }}</span>.</td>
+                                        <td class="whitespace-nowrap px-6 py-4">{{ user.email }} </td>
+                                        <td class="whitespace-nowrap px-6 py-4">{{ user.role }}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            
+                                            <div v-for="(creator,index) in users.data" :key="index">
+                                                <p v-if="creator.id === user.created_by">{{creator.role }} {{ creator.fName }}</p>
+                                            </div>
+                                        </td>
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            
+                                            <div v-for="(editor,index) in users.data" :key="index">
+                                                <p v-if="editor.id === user.updated_by">{{editor.role }} {{ editor.fName }}</p>
+                                            </div>
+                                        </td>
 
-                                            <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.right="'View full info'" @click="openModal(user.id)" ></span>
-                                        </div>
-                                        
-                                    </td>
-                                </tr>
-                                
-                            </tbody>
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            <div class=" space-x-6" >
+                                                <div v-if="$page.props.flash.success"><Toast position="top-left" /> </div>
+                                                
+                                            
+                                                <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer"  @click="deleteConfirmation(user.id)"></span>
+
+                                                <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.right="'View full info'" @click="openModal(user.id)" ></span>
+                                            </div>
+                                            
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -288,7 +288,6 @@ import {ref, computed, watch, onMounted } from 'vue'
 import {Link, useForm, usePage, router} from '@inertiajs/vue3'
 import { useToast } from 'primevue/usetoast';
 import { toUpperFirst } from '../../../Functions/Methods.vue';
-
 import Swal from 'sweetalert2';
 import printJS from 'print-js'
 
@@ -438,11 +437,6 @@ function successMessage(message)
         icon:'success',
         allowOutsideClick:false,
         allowEscapeKey:false,
-    }).then((result)=>{
-        if(result.isConfirmed)
-        {
-            location.reload();
-        }
     })
 }
 

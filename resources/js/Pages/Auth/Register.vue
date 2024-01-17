@@ -28,7 +28,21 @@
                 <span class="text-[12px]">School Year: {{  currentSchoolYear }}</span>
             </div>
             <!--input group {{ subject.subjects }} -->
+           
+            <!-- <div v-for="section in subject.subjects">
+                
+                subject name: {{ section.name }}
+                number of section: {{ section.section.length }}
+                <div v-for="sectionName in section.section">
+                    student max: {{ sectionName.maxStudents }}--
+                    section name: {{ sectionName.name }}
+                    section student count: {{ sectionName.student.length }}
+                </div>
+                
+            </div>
+            **********************************************8
             
+            {{ availableSection }} -->
             <div >
                 <form class="px-8" @submit.prevent="submit">
                     <div v-if="selectedRole === 'student'">
