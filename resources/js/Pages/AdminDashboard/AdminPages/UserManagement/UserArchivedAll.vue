@@ -15,6 +15,7 @@
                 <div v-if="$page.props.flash.success" ><span class="p-3 text-gray-200">{{ successMessage($page.props.flash.success) }}</span></div>
                 <div v-if="$page.props.flash.error" class="flex items-center rounded-md bg-red-600 my-4 h-8 "><span class="p-3 text-gray-200">{{ $page.props.flash.error }}</span></div>
             </div>
+            <span class="text-red-500">TO DO: IMPLEMENT SEARCH AND PAGINATION</span>
             <!--ALL USERS-->
             <div v-if="allUsersVisible" class="overflow-x-auto sm:-mx-6 lg:-mx-8 mt-4 overflow-x">
                     <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">

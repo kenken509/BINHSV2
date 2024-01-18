@@ -13,7 +13,7 @@
                 </span>
             </div>
         </div>   
-        
+        <span class="text-red-500">TO DO: IMPLEMENT SEARCH AND PAGINATION</span>
         <div v-if="$page.props.flash.success" class="flex items-center rounded-md bg-[#28a745] my-4 h-8 hidden "><span class="p-3 text-gray-200">{{ successMessage($page.props.flash.success) }}</span></div>
         <div v-if="$page.props.flash.error" class="flex items-center rounded-md bg-red-600 my-4 h-8 "><span class="p-3 text-gray-200">{{ $page.props.flash.error }}</span></div>
         
