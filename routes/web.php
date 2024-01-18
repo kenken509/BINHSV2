@@ -171,6 +171,8 @@ Route::controller(UserManagementController::class)->middleware(['isLoggedUser','
     //deactivated user
     Route::patch('/admin/panel/user-deactivated/{id}', 'deactivateUser')->name('admin.deactivateUser');
     Route::get('/admin/panel/user-deactivated/all', 'deactivatedUserAll')->name('admin.deactivatedUserAll');
+    Route::delete('/admin/panel/user-deactivate/delete-permanently/{id}', 'deactivatedUserDelete')->name('admin.deactivatedUserDelete');
+    Route::patch('/admin/panel/user-reactivate/{id}', 'reactivateUser')->name('admin.reactivateUser');
 });
 
 Route::controller(UserProfileController::class)->middleware(['isLoggedUser','verified'])->group(function(){

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UserCollection;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class UserManagementController extends Controller
 {
@@ -659,15 +660,19 @@ class UserManagementController extends Controller
     public function userDelete(User $user){
         //dd(Auth::user()->id);
         //delete image if there's one
-        //dd($user->id);
+       
+
         if($user->id == Auth::user()->id){
             return redirect()->back()->with('error', 'Deletion Failed!');
         }else{
             if($user->image){
                 Storage::disk('public')->delete($user->image);
             }
-                
+            $user->isActive = 2;
+            $user->save();   
             $user->delete();
+            
+            // edit this , use to_route instead
             return redirect()->back()->with('success', 'Deleted Successfully');
         }   
     }
@@ -713,12 +718,15 @@ class UserManagementController extends Controller
             if($user->role == 'student')
             {
                 $user->school_year = $currentSchoolYear;
+                $user->isActive = '1';
                 $user->save();
 
                 $user->restore();
             }
             else
             {
+                $user->isActive = '1';
+                $user->save();
                 $user->restore();
             }
             
@@ -733,19 +741,57 @@ class UserManagementController extends Controller
     public function deactivateUser($id)
     {
         $user = User::findOrFail($id);
-
-        $user->isActive = 2;
+        
+        $user->isActive = '2';
         $user->save();
 
-        return to_route('admin.showAllUsers')->with('success', 'User Successfully Deactivated. ');
-    }
+        return to_route('admin.showAllUsers')->with('success', 'User Successfully Deactivated.');
+    }   
 
     public function deactivatedUserAll()
     {
-        $deactivatedUsers = User::where('isActive',2)->get();
-
+        $deactivatedUsers = User::where('isActive', '=', '2')->orderBy('id','desc')->get();
+        
+        
         return inertia('AdminDashboard/AdminPages/UserManagement/UserDeactivatedAll',[
             'deactivatedUsers' => $deactivatedUsers,
         ]);
+    }
+
+    public function deactivatedUserDelete($id)
+    {
+        $user = User::findOrFail($id);
+
+        if($user->image){
+            Storage::disk('public')->delete($user->image);
+        }
+        $user->isActive = '0';
+        $user->save();   
+        $user->delete();
+        
+        // edit this , use to_route instead
+        return to_route('admin.deactivatedUserAll')->with('success', 'Deleted Successfully');
+    }
+
+    public function reactivateUser($id)
+    {
+        $user = User::findOrFail($id);
+
+        if($user->role == 'student')
+            {
+                $user->school_year = $currentSchoolYear;
+                $user->isActive = '1';
+                $user->save();
+
+                $user->restore();
+            }
+            else
+            {
+                $user->isActive = '1';
+                $user->save();
+                $user->restore();
+            }
+
+        return to_route('admin.deactivatedUserAll')->with('success', 'Reactivated Successfully');
     }
 }
