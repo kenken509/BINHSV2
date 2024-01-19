@@ -68,9 +68,10 @@ class ResetPasswordController extends Controller
         
         $user = User::where('reset_token','=',$resetToken)->first();
         
+        dd('im here');
         if($user)
         {
-            //dd('andito dapat ako');
+            
             if($user->reset_expires_at && now()->lessThan($user->reset_expires_at))
             {
                 
