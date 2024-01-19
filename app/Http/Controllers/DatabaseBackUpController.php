@@ -60,7 +60,7 @@ class DatabaseBackUpController extends Controller
             $dbUsername = env('DB_USERNAME');
             $dbPassword = env('DB_PASSWORD');
 
-            $command = "mysql -h $dbHost -u $dbUsername -p $dbPassword $dbDatabase < $filePath 2>&1"; // Redirect STDERR to STDOUT
+            $command = "mysql -h $dbHost -u $dbUsername -p$dbPassword $dbDatabase < $filePath 2>&1"; // Redirect STDERR to STDOUT
 
             // Log the command being executed
             Log::info("Executing command: $command");
@@ -83,6 +83,7 @@ class DatabaseBackUpController extends Controller
             }
         } else {
             // Backup file not found
+            Log::error("Command output from else: " . implode("\n", $output));
             Log::error("Backup file not found: $filePath");
             return redirect()->route('database.backup.show')->with('error', 'Backup file not found!');
         }
