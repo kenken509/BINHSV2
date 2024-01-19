@@ -68,7 +68,7 @@ class ResetPasswordController extends Controller
         
         $user = User::where('reset_token','=',$resetToken)->first();
         
-        dd('im here');
+        
         if($user)
         {
             
