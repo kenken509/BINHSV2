@@ -79,6 +79,7 @@ class DatabaseBackUpController extends Controller
             } else {
                 // Restore failed
                 Log::error("Failed to restore backup. Command output: " . implode("\n", $output));
+                Log::info("Command return value: $returnValue");
                 return redirect()->route('database.backup.show')->with('error', 'Database restoration failed!');
             }
         } else {
