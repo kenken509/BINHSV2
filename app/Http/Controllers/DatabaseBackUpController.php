@@ -55,7 +55,7 @@ class DatabaseBackUpController extends Controller
 
         if(Storage::exists($filePath))
         {
-            $mysqlPath = 'C:\xampp\mysql\bin\mysql'; // on deployment find the path for mysql
+            $mysqlPath = 'mysql'; // on deployment find the path for mysql >>> for localhohst 'C:\xampp\mysql\bin\mysql
             $command = sprintf(
                 '"%s" -u%s -p%s -h%s -P%s %s < %s',
                 $mysqlPath,

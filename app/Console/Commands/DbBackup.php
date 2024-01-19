@@ -29,7 +29,7 @@ class DbBackup extends Command
     {
         $filename = now()->format('F-j-Y_g-i-sA') . '.sql';
 
-        $command = 'C:\xampp\mysql\bin\mysqldump --user=' . config('database.connections.mysql.username') . // on deployment find the path for mysqldump
+        $command = 'mysqldump --user=' . config('database.connections.mysql.username') . // on deployment find the path for mysqldump >> for local host : C:\xampp\mysql\bin\mysqldump
            ' --password=' . config('database.connections.mysql.password') .
            ' --host=' . config('database.connections.mysql.host') .
            ' --port=' . config('database.connections.mysql.port') .
