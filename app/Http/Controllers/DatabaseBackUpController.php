@@ -41,7 +41,7 @@ class DatabaseBackUpController extends Controller
     public function restore(Request $request)
     {
         $filename = $request->filename;
-        $filePath = storage_path('backup/' . $filename);
+        $filePath = storage_path('app/public/backup/' . $filename);
 
         // Log the start of the restore process
         Log::info("Starting restore process for file: $filename");
