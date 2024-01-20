@@ -329,3 +329,10 @@ Route::controller(DatabaseBackUpController::class)->group(function(){
     Route::post('admin/database/restore', 'restore')->name('database.restore');
 });
 
+Route::controller(ThreeDFileController::class)->group(function(){
+    Route::get('3d-managment/pending', 'pending3dShow')->name('3d.pending3dShow');
+    
+    //instructor 
+    Route::get('3d-managment/add', 'pending3dShowAdd')->name('3d.pending3dShowAdd');
+});
+
