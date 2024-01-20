@@ -72,7 +72,7 @@
                         </td>
                         
                         <td v-for="instructor in section.instructors" scope="row" class="px-6 py-4 font-medium text-gray-900  ">
-                            {{ instructor.lName }}, {{  instructor.fName }}
+                            {{ instructor.lName }}, {{  instructor.fName }} 
                         </td>
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900  ">
                             {{ section.maxStudents}}

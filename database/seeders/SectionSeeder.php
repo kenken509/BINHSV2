@@ -17,12 +17,14 @@ class SectionSeeder extends Seeder
         \App\Models\Section::factory(1)->create([
             'name'          => 'AFA11A1',
             'subject_id'    => '1',
+            'maxStudents'   => '20',
             //'instructor_id' => '2',
         ]);
 
         \App\Models\Section::factory(1)->create([
             'name'          => 'HE11A1',
             'subject_id'    => '2',
+            'maxStudents'   => '20',
             //'instructor_id' => '3',
         ]);
 
@@ -30,24 +32,28 @@ class SectionSeeder extends Seeder
         \App\Models\Section::factory(1)->create([ 
             'name'          => 'ICT11M1',
             'subject_id'    => '3',
+            'maxStudents'   => '20',
             //'instructor_id' => '4',
         ]);
 
         \App\Models\Section::factory(1)->create([
             'name'          => 'ICT11A1',
             'subject_id'    => '3',
+            'maxStudents'   => '20',
             //'instructor_id' => '4',
         ]);
 
         \App\Models\Section::factory(1)->create([
             'name'          => 'ICT11A2',
             'subject_id'    => '3',
+            'maxStudents'   => '20',
             //'instructor_id' => '4',
         ]);
         
         \App\Models\Section::factory(1)->create([
             'name'          => 'IA11M1',
             'subject_id'    => '4',
+            'maxStudents'   => '20',
             //'instructor_id' => '5',
         ]);
 
