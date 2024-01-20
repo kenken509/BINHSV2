@@ -19,7 +19,7 @@
                         <label for="title" >Title:</label>
                         <InputText id="title" v-model="form.title" class="w-full" required/>
                     </div>
-
+                    
                     <div>
                         <label for="content" >Content:</label>
                         <Textarea v-model="form.content" rows="5" cols="50" class="w-full" id="content" required/>

@@ -16,5 +16,9 @@ class ThreeDFileController extends Controller
         ]);
     }
 
+    public function pending3dShowAdd()
+    {
+        return inertia('AdminDashboard/AdminPages/3d/Instructor/Add3d');
+    }
     
 }
