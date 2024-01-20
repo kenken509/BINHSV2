@@ -25,17 +25,17 @@
                 <div v-if="filteredUser" class="overflow-x-auto sm:-mx-6 lg:-mx-8 mt-4 overflow-x">
                     
                     <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                        <div class="overflow-x-scroll">
+                        <div class="overflow-x-scroll rounded-lg">
                             <table class="min-w-full text-left text-sm font-light">
-                                <thead class="border-b font-medium dark:border-neutral-500 bg-gray-300">
+                                <thead class="border-b font-medium text-gray-200  bg-green-700">
                                     <tr>
                                     <th scope="col" class="px-6 py-4">ID #</th>
                                     <th scope="col" class="px-6 py-4">Picture</th>
                                     <th scope="col" class="px-6 py-4">Full name</th>
                                     <th scope="col" class="px-6 py-4">Email</th>
                                     <th scope="col" class="px-6 py-4">Role</th>
-                                    <th scope="col" class="px-6 py-4">Added by:</th>
-                                    <th scope="col" class="px-6 py-4">Updated by:</th>
+                                    <!-- <th scope="col" class="px-6 py-4">Added by:</th>
+                                    <th scope="col" class="px-6 py-4">Updated by:</th> -->
                                     <th scope="col" class="px-6 py-4">Action</th>
                                     </tr>
                                 </thead>
@@ -59,7 +59,7 @@
                                         <td class="whitespace-nowrap px-6 py-4"><span v-if="user.lName">{{ toUpperFirst(user.lName)  }}</span>, <span v-if="user.fName">{{ toUpperFirst(user.fName)  }}</span> <span v-if="user.mName">{{ user.mName.substring(0,1).toUpperCase() }}</span>.</td>
                                         <td class="whitespace-nowrap px-6 py-4">{{ user.email }} </td>
                                         <td class="whitespace-nowrap px-6 py-4">{{ user.role }}</td>
-                                        <td class="whitespace-nowrap px-6 py-4">
+                                        <!-- <td class="whitespace-nowrap px-6 py-4">
                                             
                                             <div v-for="(creator,index) in users.data" :key="index">
                                                 <p v-if="creator.id === user.created_by">{{creator.role }} {{ creator.fName }}</p>
@@ -70,7 +70,7 @@
                                             <div v-for="(editor,index) in users.data" :key="index">
                                                 <p v-if="editor.id === user.updated_by">{{editor.role }} {{ editor.fName }}</p>
                                             </div>
-                                        </td>
+                                        </td> -->
 
                                         <td class="whitespace-nowrap px-6 py-4">
                                             <div class=" space-x-6" >
@@ -94,70 +94,70 @@
                 
                 <!--ALL USERS-->
                 <div v-if="allUsersVisible" class="overflow-x-auto sm:-mx-6 lg:-mx-8 mt-4 overflow-x">
-                    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                        <div class="overflow-x-scroll">
+                    <div class="inline-block min-w-full py-2 sm:px-6  lg:px-8"> 
+                        <div class="overflow-x-scroll rounded-lg">
                             <table class="min-w-full text-left text-sm font-light">
-                            <thead class="border-b font-medium dark:border-neutral-500 bg-gray-300">
-                                <tr>
-                                <th scope="col" class="px-6 py-4">ID #</th>
-                                <th scope="col" class="px-6 py-4">Picture</th>
-                                <th scope="col" class="px-6 py-4">Full name</th>
-                                <th scope="col" class="px-6 py-4">Email</th>
-                                <th scope="col" class="px-6 py-4">Role</th>
-                                <th scope="col" class="px-6 py-4">Added by:</th>
-                                <th scope="col" class="px-6 py-4">Updated by:</th>
-                                <th scope="col" class="px-6 py-4">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                v-for="user in users.data"
-                                :key="user.id"
-                                
-                                class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-gray-300">
+                                <thead class="border-b font-medium text-gray-200  bg-green-700">
+                                    <tr>
+                                    <th scope="col" class="px-6 py-4">ID #</th>
+                                    <th scope="col" class="px-6 py-4">Picture</th>
+                                    <th scope="col" class="px-6 py-4">Full name</th>
+                                    <th scope="col" class="px-6 py-4">Email</th>
+                                    <th scope="col" class="px-6 py-4">Role</th>
+                                    <!-- <th scope="col" class="px-6 py-4">Added by:</th>
+                                    <th scope="col" class="px-6 py-4">Updated by:</th> -->
+                                    <th scope="col" class="px-6 py-4">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                    v-for="user in users.data"
+                                    :key="user.id"
                                     
-                                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{ user.id}}</td>
-                                    <td class="whitespace-nowrap px-6 py-4">
+                                    class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-gray-300">
                                         
-                                        <Image :src="user.image ? appUrl+user.image:'/storage/Images/default.png'" alt="Image" width="60" preview>
-                                            <template #indicator>
-                                                <i class="pi pi-eye"></i>
-                                            </template>
-                                        </Image>     
-                                    </td>  
-                                    
-                                    <td class="whitespace-nowrap px-6 py-4"><span v-if="user.lName">{{ toUpperFirst(user.lName)  }}</span>, <span v-if="user.fName">{{ toUpperFirst(user.fName)  }}</span> <span v-if="user.mName">{{ user.mName.substring(0,1).toUpperCase() }}</span>.</td>
-                                    <td class="whitespace-nowrap px-6 py-4">{{ user.email }}</td>
-                                    <td class="whitespace-nowrap px-6 py-4">{{ user.role }}</td>
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        
-                                        <div v-for="(creator,index) in users.data" :key="index">
-                                            <p v-if="creator.id === user.created_by">{{creator.role }} {{ creator.fName }}</p>
-                                        </div>
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        
-                                        <div v-for="(editor,index) in users.data" :key="index">
-                                            <p v-if="editor.id === user.updated_by">{{editor.role }} {{ editor.fName }}</p>
-                                        </div>
-                                    </td>
-
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        <div class=" space-x-6" >
-                                            <div v-if="$page.props.flash.success"><Toast position="top-left" /> </div>
+                                        <td class="whitespace-nowrap px-6 py-4 font-medium">{{ user.id}}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">
                                             
+                                            <Image :src="user.image ? appUrl+user.image:'/storage/Images/default.png'" alt="Image" width="60" preview>
+                                                <template #indicator>
+                                                    <i class="pi pi-eye"></i>
+                                                </template>
+                                            </Image>     
+                                        </td>  
                                         
-                                            <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Delete User'" @click="deleteConfirmation(user.id)"></span>
-                                            <span class="pi pi-ban text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Deactivate User'" @click="deactivationConfirmation(user.id)"></span>
-                                            <!-- <Link :href="route('admin.userDelete', {user: user.id})" class="cursor-pointer" v-tooltip.left="'Delete User'" as="button" method="delete" ><span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150"></span></Link> -->
-                                            <!-- <Link :href="route('admin.editUser', {id:user.id} )" class="cursor-pointer hover:dark:scale-125" v-tooltip.right="'Edit User'" ><span class="pi pi-user-edit text-green-600 scale-110 hover:dark:scale-150"></span></Link> -->
-                                            <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'View full info'" @click="openModal(user.id)" ></span>
-                                        </div>
-                                        
-                                    </td>
-                                </tr>
-                                
-                            </tbody>
+                                        <td class="whitespace-nowrap px-6 py-4"><span v-if="user.lName">{{ toUpperFirst(user.lName)  }}</span>, <span v-if="user.fName">{{ toUpperFirst(user.fName)  }}</span> <span v-if="user.mName">{{ user.mName.substring(0,1).toUpperCase() }}</span>.</td>
+                                        <td class="whitespace-nowrap px-6 py-4">{{ user.email }}</td>
+                                        <td class="whitespace-nowrap px-6 py-4">{{ user.role }}</td>
+                                        <!-- <td class="whitespace-nowrap px-6 py-4">
+                                            
+                                            <div v-for="(creator,index) in users.data" :key="index">
+                                                <p v-if="creator.id === user.created_by">{{creator.role }} {{ creator.fName }}</p>
+                                            </div>
+                                        </td>
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            
+                                            <div v-for="(editor,index) in users.data" :key="index">
+                                                <p v-if="editor.id === user.updated_by">{{editor.role }} {{ editor.fName }}</p>
+                                            </div>
+                                        </td> -->
+
+                                        <td class="whitespace-nowrap px-6 py-4">
+                                            <div class=" space-x-6" >
+                                                <div v-if="$page.props.flash.success"><Toast position="top-left" /> </div>
+                                                
+                                            
+                                                <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Delete User'" @click="deleteConfirmation(user.id)"></span>
+                                                <span class="pi pi-ban text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Deactivate User'" @click="deactivationConfirmation(user.id)"></span>
+                                                <!-- <Link :href="route('admin.userDelete', {user: user.id})" class="cursor-pointer" v-tooltip.left="'Delete User'" as="button" method="delete" ><span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150"></span></Link> -->
+                                                <!-- <Link :href="route('admin.editUser', {id:user.id} )" class="cursor-pointer hover:dark:scale-125" v-tooltip.right="'Edit User'" ><span class="pi pi-user-edit text-green-600 scale-110 hover:dark:scale-150"></span></Link> -->
+                                                <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'View full info'" @click="openModal(user.id)" ></span>
+                                            </div>
+                                            
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -355,7 +355,7 @@ watch(searchField, (newSearchField )=>{
 })
 
 function updateFilteredUsers(){
-    console.log('ito laman: '+searchField.value);
+    //console.log('ito laman: '+searchField.value);
     if(searchField.value === '')
     {
         filteredUser.value = "";
