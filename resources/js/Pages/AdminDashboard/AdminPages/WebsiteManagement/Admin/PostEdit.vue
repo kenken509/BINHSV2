@@ -659,6 +659,17 @@ const submit = ()=> {
     {
         form.post(route('editAboutPost.store'), { onSuccess: ()=> form.reset(['images', 'installer'])})
     }
+
+    if(web.webPage === 'About')
+    {
+        form.post(route('editAboutPost.store'), { onSuccess: ()=> form.reset(['images', 'installer'])})
+    }
+
+    if(web.webPage === 'Contacts')
+    {
+        form.post(route('editAboutPost.store'), { onSuccess: ()=> form.reset(['images', 'installer'])})
+    }
+    
     
 };
 </script>

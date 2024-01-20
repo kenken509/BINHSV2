@@ -1,11 +1,12 @@
 <template>
     <DashboardLayout :user="user">
         <div class=" flex justify-between items-center border-bot-only border-gray-600 shadow-md mb-4">
-            <span class="text-[20px] font-bold text-gray-500">Web Posts Page</span>  
+            <span class="text-[20px] font-bold text-gray-500">{{selectedPage ? selectedPage.name : 'Web'}} Page Posts</span>  
             <Dropdown  v-model="selectedPage" :options="pages" optionLabel="name" placeholder="Select page" class="md:w-14rem mb-2" />
         </div>
-        <span class="text-red-600">TO DO: POST EDIT IS NOT WORKING!</span>
+        
        <div v-if="$page.props.flash.success" >{{ successMessage($page.props.flash.success) }}</div>
+       
        <!--about page-->
         <div v-if="selected === 'About'" class=" overflow-x-auto shadow-md sm:rounded-lg">
             
@@ -33,7 +34,7 @@
                 </thead>
                 <tbody>
                     
-                    <tr v-for="post in post.about" class="hover:bg-red-200 cursor-pointer border border-gray-300">
+                    <tr v-for="post in post.about" class="hover:bg-gray-200 cursor-pointer border border-gray-300">
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900 ">
                             {{ post.id }}
                         </td>
@@ -51,7 +52,7 @@
                                 <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Delete Post'" @click="deleteConfirmation(post.id ,'about')"></span>
                                 <!-- <Link :href="route('aboutPost.delete', {id: post.id})" class="cursor-pointer" v-tooltip.left="'Delete User'" as="button" method="delete" ><span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150"></span></Link> -->
                                 <Link :href="route('editPost.show', {id:post.id, page:'About'})" class="cursor-pointer hover:dark:scale-125" v-tooltip.right="'Edit Post'" ><span class="pi pi-user-edit text-green-600 scale-110 hover:dark:scale-150"></span></Link>
-                                <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.right="'View full info'" @click="openModal(user.id)" ></span>
+                                <!-- <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.right="'View full info'" @click="openModal(user.id)" ></span> -->
                             </div>
                             
                         </td>
@@ -105,7 +106,7 @@
                                 <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Delete Post'" @click="deleteConfirmation(post.id, 'contacts')"></span>
                                 <!-- <Link :href="route('contactPost.delete', {id: post.id})" class="cursor-pointer" v-tooltip.left="'Delete User'" as="button" method="delete" ><span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150"></span></Link> -->
                                 <Link :href="route('editPost.show',{id:post.id, page:'Contacts'})" class="cursor-pointer hover:dark:scale-125" v-tooltip.right="'Edit Post'" ><span class="pi pi-user-edit text-green-600 scale-110 hover:dark:scale-150"></span></Link>
-                                <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.right="'View full info'" @click="openModal(user.id)" ></span>
+                                <!-- <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.right="'View full info'" @click="openModal(user.id)" ></span> -->
                             </div>
                             
                         </td>
@@ -143,7 +144,7 @@
                 </thead>
                 <tbody>
                     
-                    <tr v-for="post in post.news" class="hover:bg-red-200 cursor-pointer border border-gray-300">
+                    <tr v-for="post in post.news" class="hover:bg-gray-200 cursor-pointer border border-gray-300">
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900 ">
                             {{ post.id }}
                         </td>
@@ -168,7 +169,7 @@
                                 <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Delete Post'" @click="deleteConfirmation(post.id, 'news')"></span>
                                 <!-- <Link :href="route('newsPost.delete', {id: post.id})" class="cursor-pointer" v-tooltip.left="'Delete User'" as="button" method="delete" ><span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150"></span></Link> -->
                                 <Link :href="route('editPost.show', {id:post.id, page:'News'})" class="cursor-pointer hover:dark:scale-125" v-tooltip.right="'Edit Post'" ><span class="pi pi-user-edit text-green-600 scale-110 hover:dark:scale-150"></span></Link>
-                                <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.right="'View full info'" @click="openModal(user.id)" ></span>
+                                <!-- <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.right="'View full info'" @click="openModal(user.id)" ></span> -->
                             </div>
                             
                         </td>
@@ -244,7 +245,7 @@
                                 <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Delete Post'" @click="deleteConfirmation(post.id, 'downloads')"></span>
                                 <!-- <Link :href="route('downloadsPost.delete', {id: post.id})" class="cursor-pointer" v-tooltip.left="'Delete User'" as="button" method="delete" ><span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150"></span></Link> -->
                                 <Link :href="route('editPost.show', {id:post.id, page:'Downloads'})" class="cursor-pointer hover:dark:scale-125" v-tooltip.right="'Edit Post'" ><span class="pi pi-user-edit text-green-600 scale-110 hover:dark:scale-150"></span></Link>
-                                <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.right="'View full info'" @click="openModal(user.id)" ></span>
+                                <!-- <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.right="'View full info'" @click="openModal(user.id)" ></span> -->
                             </div>
                             
                         </td>
@@ -266,7 +267,7 @@
 import DashboardLayout from '../../../Layout/DashboardLayout.vue';
 
 import { usePage, Link, router } from '@inertiajs/vue3';
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import Swal from 'sweetalert2';
 
 const user = usePage().props.user
@@ -280,6 +281,8 @@ const post = defineProps({
 })
 
 const selectedPage = ref(null);
+
+
 const pages = ref([
     {'name':'About'},
     {'name':'Contacts'},
@@ -287,6 +290,9 @@ const pages = ref([
     {'name':'Downloads'},
 ])
 
+onMounted(()=>{
+    selectedPage.value = {'name':'About'}
+})
 
 const selected = computed(()=>{
     

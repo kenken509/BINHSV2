@@ -181,53 +181,53 @@
                         </div>
                     </div>
                 </div>               
-            </div>
+                </div>
             
-            <!--News Page-->
-            <div v-if="pagesToAdd === 'News'" class="col-span-12">
-                    <div>
-                        <div class="flex flex-col">
-                           <h1 class="mb-6">Title: </h1>
-                            <span class="p-float-label">
-                                <InputText id="name" v-model="form.title" class="w-full" required/>
-                                <label for="name" >Enter news title...</label>
-                             </span>
-                        </div>
+                <!--News Page-->
+                <div v-if="pagesToAdd === 'News'" class="col-span-12">
+                        <div>
+                            <div class="flex flex-col">
+                            <h1 class="mb-6">Title: </h1>
+                                <span class="p-float-label">
+                                    <InputText id="name" v-model="form.title" class="w-full" required/>
+                                    <label for="name" >Enter news title...</label>
+                                </span>
+                            </div>
 
-                        <div class="mt-4">
-                            <h1 class="mb-6">Content: </h1>
-                            <span class="p-float-label">
-                                <Textarea v-model="form.content" rows="5" cols="50" class="w-full" id="newsContent" required/>
-                                <label for="newsContent" >Enter news content</label>
-                            </span>
-                        </div>
+                            <div class="mt-4">
+                                <h1 class="mb-6">Content: </h1>
+                                <span class="p-float-label">
+                                    <Textarea v-model="form.content" rows="5" cols="50" class="w-full" id="newsContent" required/>
+                                    <label for="newsContent" >Enter news content</label>
+                                </span>
+                            </div>
 
-                        <!--image-->
-                        <div class="w-full  my-1   py-2">
-                            <h1 class="mb-6">Image: </h1>
-                            <div class="px-2 py-3 border-2 border-gray-300 rounded-md"> 
-                                <label for="fileInput" class="file-input-label bg-gray-300 px-4 py-2 rounded-md cursor-pointer">
-                                    Select a file... 
-                                </label>
-                                <div v-if="imageUrl" class="mx-2 mt-2 p-1 bg-gray-200  inline-block relative  border border-gray-300  rounded-md" >
-                                    <h1 class="">{{ attachmentFileName }}</h1> 
-                                    <div class="absolute right-[-7px] top-[-7px] hover:right-[-9px] hover:top-[-7px] cursor-pointer">
-                                        <i class="pi pi-times-circle text-red-700 cursor-pointer hover:text-[20px]" @click="deleteImage" ></i>
+                            <!--image-->
+                            <div class="w-full  my-1   py-2">
+                                <h1 class="mb-6">Image: </h1>
+                                <div class="px-2 py-3 border-2 border-gray-300 rounded-md"> 
+                                    <label for="fileInput" class="file-input-label bg-gray-300 px-4 py-2 rounded-md cursor-pointer">
+                                        Select a file... 
+                                    </label>
+                                    <div v-if="imageUrl" class="mx-2 mt-2 p-1 bg-gray-200  inline-block relative  border border-gray-300  rounded-md" >
+                                        <h1 class="">{{ attachmentFileName }}</h1> 
+                                        <div class="absolute right-[-7px] top-[-7px] hover:right-[-9px] hover:top-[-7px] cursor-pointer">
+                                            <i class="pi pi-times-circle text-red-700 cursor-pointer hover:text-[20px]" @click="deleteImage" ></i>
+                                        </div>
                                     </div>
+                                    <input  type="file"  id="fileInput" multiple @input="addImage" accept="image/*" hidden  ref="fileInputRef"/>
                                 </div>
-                                <input  type="file"  id="fileInput" multiple @input="addImage" accept="image/*" hidden  ref="fileInputRef"/>
+                            </div>
+                            <div v-if="imageUrl" class="flex justify-center items-center border border-gray-300 rounded-md p-2 shadow-md" >
+                                <img :src="imageUrl" alt="Error" class="w-[50%] h-[50%] rounded-md relative"/>
+                            </div>
+                            
+                            <!--image-->
+                            
+                            <div class="w-full mt-4">
+                                <Button label="Submit" class="w-full " :disabled="form.processing" type="submit" />
                             </div>
                         </div>
-                        <div v-if="imageUrl" class="flex justify-center items-center border border-gray-300 rounded-md p-2 shadow-md" >
-                            <img :src="imageUrl" alt="Error" class="w-[50%] h-[50%] rounded-md relative"/>
-                        </div>
-                        
-                        <!--image-->
-                        
-                        <div class="w-full mt-4">
-                            <Button label="Submit" class="w-full " :disabled="form.processing" type="submit" />
-                        </div>
-                    </div>
                 </div>
         </form>
        
@@ -356,7 +356,8 @@ const form = useForm({
     image:null,
     video:null,
     installerType:null,
-    installerLink:null
+    installerLink:null,
+    
 })
 
 const validationError = ref('');

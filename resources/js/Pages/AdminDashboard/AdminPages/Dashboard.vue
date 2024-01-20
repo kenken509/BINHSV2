@@ -95,7 +95,7 @@
             <div
                 class="flex flex-col justify-center items-center w-[100%] lg:w-[80%] border border-gray-300 shadow-md rounded-md"
             >
-                <div class="py-4 text-gray-500">WEB ANALYSIS DATA</div>
+                <div class="py-4 text-gray-500">WEB DATA  ANALYSIS </div>
                 <div class="w-full px-2">
                     <hr class="border-t-2 border-gray-300" />
                 </div>

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\AboutPagePost;
 use App\Models\ContactPagePost;
 use App\Models\DownloadsPagePost;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,11 +20,11 @@ class AdminPostController extends Controller
     {
 
         return inertia('AdminDashboard/AdminPages/WebsiteManagement/Admin/PostsAll',[
-            'posts' => AdminPost::all(),
-            'about' => AboutPagePost::with('author')->get(),
-            'contacts' => ContactPagePost::with('author')->get(),
-            'news' => NewsPagePost::with('author')->get(),
-            'downloads' => DownloadsPagePost::with('author')->get(),
+            'posts' => AdminPost::orderBy('created_at','desc')->get(),
+            'about' => AboutPagePost::with('author')->orderBy('created_at','desc')->get(),
+            'contacts' => ContactPagePost::with('author')->orderBy('created_at','desc')->get(),
+            'news' => NewsPagePost::with('author')->orderBy('created_at','desc')->get(),
+            'downloads' => DownloadsPagePost::with('author')->orderBy('created_at','desc')->get(),
         ]);
     }
 
@@ -51,14 +52,16 @@ class AdminPostController extends Controller
                 $post->created_by   = Auth::user()->id;
                 $post->save();
 
-                return redirect()->route('admin.post.all')->with('success', 'Successfully added new post on About Page!');
+                // Flash success message to session
+                //Session::flash('success', 'Successfully Added New Post');
+                
+                return to_route('admin.post.all')->with('success', 'Successfully Added New Post');
             }
        }
 
        if($request->page == 'Contacts')
        {
             $post = new ContactPagePost();
-
             $post->name = $request->name;
             $post->phoneNumber = $request->phoneNumber;
             $post->email = $request->email;
