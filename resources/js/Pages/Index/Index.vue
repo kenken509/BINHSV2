@@ -19,7 +19,7 @@
     
     <div v-if="$page.props.flash.success" >{{ successMessage($page.props.flash.success) }} </div>
     <div v-if="$page.props.flash.error" >{{ errorMessage($page.props.flash.error) }} </div>
-
+    
     <!--NEW CAROUSEL-->
     <div class="flex justify-center overflow-hidden">
       <div class="w-[90%] lg:w-[86%] mt-10  max-h-[200px] md:max-h-[400px] lg:max-h-[1020px]  flex justify-center ">

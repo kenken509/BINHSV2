@@ -13,7 +13,8 @@
                 </span>
             </div>
         </div>   
-        <span class="text-red-500">TO DO: IMPLEMENT SEARCH AND PAGINATION</span>
+        
+        
         <div v-if="$page.props.flash.success" class="flex items-center rounded-md bg-[#28a745] my-4 h-8 hidden "><span class="p-3 text-gray-200">{{ successMessage($page.props.flash.success) }}</span></div>
         <div v-if="$page.props.flash.error" class="flex items-center rounded-md bg-red-600 my-4 h-8 "><span class="p-3 text-gray-200">{{ $page.props.flash.error }}</span></div>
         
@@ -103,7 +104,7 @@ import Swal from 'sweetalert2';
 
 const user = usePage().props.user;
 
-const allUsersVisible = ref(false)
+
 const searchField = ref(null);
 
 const data = defineProps({
@@ -113,7 +114,7 @@ const data = defineProps({
 const filteredData = ref([]);
 
 onMounted(()=>{
-    allUsersVisible.value = true
+    
     filteredData.value = data.deactivatedUsers
     pageNumbers.length = totalPages.value;
 })
@@ -121,6 +122,38 @@ onMounted(()=>{
 watch(() => data.deactivatedUsers, (newData) => {
   filteredData.value = newData;
 });
+
+// search logic
+watch(searchField,(val)=>{
+   
+    if(val === '')
+    {
+        filteredData.value = data.deactivatedUsers
+    }
+    else
+    {
+        updateFilteredUsers();
+    }
+})
+
+function updateFilteredUsers(){
+    console.log('ito laman: '+searchField.value);
+    if(searchField.value === '')
+    {
+        filteredData.value = "";
+       
+    }
+    else
+    {
+        //allUsersVisible.value = false
+        filteredData.value = data.deactivatedUsers.filter(user =>
+        Object.values(user).some(value =>
+            typeof value === 'string' && value.toLowerCase().includes(searchField.value.toLowerCase())
+            )
+        );
+    }
+    
+}
 
 //pagination logic
 const itemsPerPage = ref(10);
@@ -234,4 +267,8 @@ function successMessage(message)
         allowEscapeKey:false,
     })
 }
+
+
+
+
 </script>

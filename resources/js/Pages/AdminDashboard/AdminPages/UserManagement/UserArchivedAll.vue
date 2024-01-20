@@ -15,27 +15,24 @@
                 <div v-if="$page.props.flash.success" ><span class="p-3 text-gray-200">{{ successMessage($page.props.flash.success) }}</span></div>
                 <div v-if="$page.props.flash.error" class="flex items-center rounded-md bg-red-600 my-4 h-8 "><span class="p-3 text-gray-200">{{ $page.props.flash.error }}</span></div>
             </div>
-            <span class="text-red-500">TO DO: IMPLEMENT SEARCH AND PAGINATION</span>
-            <!--ALL USERS-->
-            <div v-if="allUsersVisible" class="overflow-x-auto sm:-mx-6 lg:-mx-8 mt-4 overflow-x">
-                    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                        <div class="overflow-x-scroll">
-                            <table class="min-w-full text-left text-sm font-light">
-                            <thead class="border-b font-medium dark:border-neutral-500 bg-gray-300">
+            {{ currentPage }}
+            <div  class="overflow-x-auto sm:-mx-6 lg:-mx-8  overflow-x">
+                <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                    <div class=" overflow-x-auto shadow-md sm:rounded-lg mt-4">
+                        <table class="min-w-full text-left text-sm font-light">
+                            <thead class="text-xs text-gray-200 uppercase bg-green-700  ">
                                 <tr>
                                 <th scope="col" class="px-6 py-4">ID #</th>
                                 <th scope="col" class="px-6 py-4">Picture</th>
                                 <th scope="col" class="px-6 py-4">Full name</th>
                                 <th scope="col" class="px-6 py-4">Email</th>
                                 <th scope="col" class="px-6 py-4">Role</th>
-                                <!-- <th scope="col" class="px-6 py-4">Added by:</th>
-                                <th scope="col" class="px-6 py-4">Updated by:</th> -->
                                 <th scope="col" class="px-6 py-4">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr
-                                v-for="user in data.archivedUsers"
+                                v-for="user in currentPageItems"
                                 :key="user.id"
                                 
                                 class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-gray-300">
@@ -53,18 +50,7 @@
                                     <td class="whitespace-nowrap px-6 py-4"><span v-if="user.lName">{{ toUpperFirst(user.lName)  }}</span>, <span v-if="user.fName">{{ toUpperFirst(user.fName)  }}</span> <span v-if="user.mName">{{ user.mName.substring(0,1).toUpperCase() }}</span>.</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{ user.email }}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{ user.role }}</td>
-                                    <!-- <td class="whitespace-nowrap px-6 py-4">
-                                        
-                                        <div v-for="(creator,index) in users.data" :key="index">
-                                            <p v-if="creator.id === user.created_by">{{creator.role }} {{ creator.fName }}</p>
-                                        </div>
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        
-                                        <div v-for="(editor,index) in users.data" :key="index">
-                                            <p v-if="editor.id === user.updated_by">{{editor.role }} {{ editor.fName }}</p>
-                                        </div>
-                                    </td> -->
+                                
 
                                     <td class="whitespace-nowrap px-6 py-4">
                                         <div class=" space-x-6" >
@@ -75,13 +61,27 @@
                                         
                                     </td>
                                 </tr>
-                                
+                                    
                             </tbody>
-                            </table>
-                        </div>
+                        </table>
                     </div>
                 </div>
-                <!--ALL USERS-->
+            </div>
+            <div class="flex justify-center w-full space-x-4 mt-4" v-if="totalPages > 1">
+                <div @click="prevPage" class="flex items-center  cursor-pointer hover:text-red-400">
+                    <i class="pi pi-angle-double-left cursor-pointer" style="font-size: 24px;"></i>
+                    
+                </div>
+                <div class="flex space-x-2">
+                    <div v-for="(number, index) in totalPages" class="hover:text-green-500 cursor-pointer" @click="changePageClick(index+1)" >
+                        <div v-if="currentPage === index+1" class="border bg-green-700 px-2 rounded-lg text-gray-200" >{{ index+1 }}</div>
+                        <div v-else class="px-2">{{ index+1 }}</div>
+                    </div>
+                </div>
+                <div @click="nextPage" class="flex items-center  cursor-pointer hover:text-green-400">
+                    <i class="pi pi-angle-double-right  " style="font-size: 24px;"></i>
+                </div>
+            </div>    
         </div>
     </DashboardLayout>
     
@@ -90,14 +90,14 @@
 <script setup>
 import DashboardLayout from '../../Layout/DashboardLayout.vue';
 import {Link, useForm, usePage, router} from '@inertiajs/vue3'
-import  {onMounted, ref } from 'vue'
+import  {onMounted, ref, watch,computed } from 'vue'
 import { toUpperFirst } from '../../../Functions/Methods.vue';
 import Swal from 'sweetalert2';
 
 
 const user = usePage().props.user;
 const searchField = ref(null);
-const allUsersVisible = ref(false);
+
 
 const data = defineProps({
     archivedUsers:Array,
@@ -105,9 +105,77 @@ const data = defineProps({
 const filteredData = ref([])
 
 onMounted(()=>{
-    allUsersVisible.value = true;
+   
     filteredData.value = data.archivedUsers
 })
+
+
+// searcch logic
+watch(searchField,(val)=>{
+   
+   if(val === '')
+   {
+       filteredData.value = data.archivedUsers
+   }
+   else
+   {
+       updateFilteredUsers();
+   }
+})
+
+function updateFilteredUsers(){
+    //console.log('ito laman: '+searchField.value);
+    if(searchField.value === '')
+    {
+        filteredData.value = "";
+       
+    }
+    else
+    {
+        filteredData.value = data.archivedUsers.filter(user =>
+        Object.values(user).some(value =>
+            typeof value === 'string' && value.toLowerCase().includes(searchField.value.toLowerCase())
+            )
+        );
+    }
+    
+}
+
+const itemsPerPage = ref(10);
+const currentPage = ref(1);
+
+
+const totalPages = computed(() => Math.ceil(filteredData.value.length / itemsPerPage.value));
+const pageNumbers = ref([]);
+watch(currentPage,(val)=>{
+    console.log(val);
+})
+const currentPageItems = computed(() => {
+    
+  const start = (currentPage.value - 1) * itemsPerPage.value; 
+  const end = start + itemsPerPage.value;
+  
+  return filteredData.value.slice(start, end);
+}); 
+
+const nextPage = () => {
+    
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+  }
+};
+
+
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
+
+const changePageClick = (index)=>
+{
+    currentPage.value = index;
+}
 
 
 // alert codes

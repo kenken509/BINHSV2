@@ -1,6 +1,6 @@
 {
-  "_index.min-fee4ad7a.js": {
-    "file": "assets/index.min-fee4ad7a.js",
+  "_index.min-bc1d3771.js": {
+    "file": "assets/index.min-bc1d3771.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -115,12 +115,12 @@
     "src": "public/images/webPage/logo2.jpg"
   },
   "resources/css/app.css": {
-    "file": "assets/app-f95f18bf.css",
+    "file": "assets/app-28353df6.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/js/app.css": {
-    "file": "assets/app-44ea8790.css",
+    "file": "assets/app-d5e7617a.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
@@ -154,12 +154,12 @@
       "assets/primeicons-5e10f102.svg"
     ],
     "css": [
-      "assets/app-44ea8790.css"
+      "assets/app-d5e7617a.css"
     ],
     "dynamicImports": [
-      "_index.min-fee4ad7a.js"
+      "_index.min-bc1d3771.js"
     ],
-    "file": "assets/app-cc2b1452.js",
+    "file": "assets/app-9f5fc433.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }
