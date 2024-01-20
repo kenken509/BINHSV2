@@ -4,6 +4,7 @@
             <span class="text-[20px] font-bold text-gray-500">Web Posts Page</span>  
             <Dropdown  v-model="selectedPage" :options="pages" optionLabel="name" placeholder="Select page" class="md:w-14rem mb-2" />
         </div>
+        <span class="text-red-600">TO DO: POST EDIT IS NOT WORKING!</span>
        <div v-if="$page.props.flash.success" >{{ successMessage($page.props.flash.success) }}</div>
        <!--about page-->
         <div v-if="selected === 'About'" class=" overflow-x-auto shadow-md sm:rounded-lg">

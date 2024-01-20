@@ -15,19 +15,19 @@
                 <div v-if="$page.props.flash.success" ><span class="p-3 text-gray-200">{{ successMessage($page.props.flash.success) }}</span></div>
                 <div v-if="$page.props.flash.error" class="flex items-center rounded-md bg-red-600 my-4 h-8 "><span class="p-3 text-gray-200">{{ $page.props.flash.error }}</span></div>
             </div>
-            {{ currentPage }}
+            
             <div  class="overflow-x-auto sm:-mx-6 lg:-mx-8  overflow-x">
                 <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                     <div class=" overflow-x-auto shadow-md sm:rounded-lg mt-4">
                         <table class="min-w-full text-left text-sm font-light">
                             <thead class="text-xs text-gray-200 uppercase bg-green-700  ">
                                 <tr>
-                                <th scope="col" class="px-6 py-4">ID #</th>
-                                <th scope="col" class="px-6 py-4">Picture</th>
-                                <th scope="col" class="px-6 py-4">Full name</th>
-                                <th scope="col" class="px-6 py-4">Email</th>
-                                <th scope="col" class="px-6 py-4">Role</th>
-                                <th scope="col" class="px-6 py-4">Action</th>
+                                    <th scope="col" class="px-6 py-4">ID #</th>
+                                    <th scope="col" class="px-6 py-4">Picture</th>
+                                    <th scope="col" class="px-6 py-4">Full name</th>
+                                    <th scope="col" class="px-6 py-4">Email</th>
+                                    <th scope="col" class="px-6 py-4">Role</th>
+                                    <th scope="col" class="px-6 py-4">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,11 +57,9 @@
                                             <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Delete User Permanently'" @click="deleteConfirmation(user.id)"></span>
                                             <span class="pi pi-refresh text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Restore User'" @click="restoreConfirmation(user.id)" ></span>
                                             <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'View full info'" @click="openModal(user.id)" ></span>
-                                        </div>
-                                        
+                                        </div>                                      
                                     </td>
-                                </tr>
-                                    
+                                </tr>                                   
                             </tbody>
                         </table>
                     </div>
