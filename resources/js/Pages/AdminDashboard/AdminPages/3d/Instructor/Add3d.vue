@@ -11,15 +11,15 @@
         </div>
         <span class="text-red-500 text-[30px]">TO DO: PROCESS THE SUBMISSION ON BACKEND</span>
         <div  class="col-span-12 mt-8">
-            <form @submit.prevent="submit">
+            <form @submit.prevent="submit" id="submitForm">
                 <div class="flex flex-col">
                     <label for="title"  class="my-2">3D Name:</label>
-                    <InputText id="title" v-model="form.title" class="w-full" required/>
+                    <InputText id="title" v-model="form.name" class="w-full" required/>
                 </div>
 
                 <div class="my-4 ">
                     <label for="content"  >Description:</label>
-                    <Textarea v-model="form.content" rows="5" cols="50" class="w-full " id="content" required />
+                    <Textarea v-model="form.description" rows="5" cols="50" class="w-full " id="content" required />
                 </div>
                 
                 <div class="mb-2">
@@ -88,7 +88,8 @@ import {ref} from 'vue'
 const user = usePage().props.user;
 
 const form = useForm({
-    title:null,
+    name:null,
+    description:null,
     image:null,
     threeDFile:null,
 })
@@ -159,14 +160,12 @@ const submit = ()=>{
     }
     else
     {
-        if(imageIsValid.value && threeDIsValid.value)
+        
+        if(imageIsValid.value === true && threeDIsValid.value === true)
         {
-            alert('submit allowed')
+            form.post(route('3d.pending3dStore', {preserveScroll: true}))
         }
-        else
-        {
-            alert('submit not allowed')
-        }
+        
     }
     
 }

@@ -334,5 +334,6 @@ Route::controller(ThreeDFileController::class)->group(function(){
     
     //instructor 
     Route::get('3d-managment/add', 'pending3dShowAdd')->name('3d.pending3dShowAdd');
+    Route::post('3d-managment/store', 'pending3dStore')->name('3d.pending3dStore');
 });
 

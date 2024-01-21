@@ -20,5 +20,14 @@ class ThreeDFileController extends Controller
     {
         return inertia('AdminDashboard/AdminPages/3d/Instructor/Add3d');
     }
+
+    public function pending3dStore(Request $request)
+    {
+        dd($request);
+        $new3d = new ThreeDFile();
+
+        $new3d->three_d_name = $request->name;
+        $new3d->description = $request->description;
+    }
     
 }
