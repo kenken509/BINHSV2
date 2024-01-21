@@ -92,7 +92,8 @@ class UserManagementController extends Controller
         }
             
         $user->delete();
-        return redirect()->route('admin.showAllUsers')->with('success', 'Rejected Successfully!');
+        
+        return redirect()->route('3d.pending3dShowAll')->with('success', 'Deleted Successfully!');
     }
 
     public function ApproveUser($id)

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class ThreeDFileController extends Controller
@@ -77,6 +78,19 @@ class ThreeDFileController extends Controller
             Log::info("this is the error: $e");
             return back()->withErrors(['error' => 'Error occurred while adding new 3D. Please try again.']);
         }
+    }
+
+    public function pending3dDelete($id)
+    {
+       
+        $file = ThreeDFile::findOrFail($id);
+        if($file->image){
+            Storage::disk('public')->delete($file->image);
+        }
+            
+        $file->delete();
+        
+        return redirect()->route('3d.pending3dShowAll')->with('success', 'Deleted Successfully!');
     }
     
 }

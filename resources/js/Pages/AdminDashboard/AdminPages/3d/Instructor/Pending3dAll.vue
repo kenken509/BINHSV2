@@ -11,7 +11,7 @@
             </div>
        </div>
        <span class="text-red-500">
-            TO DO: HANDLE DELETE, EDIT --- THIS SHOULD BE PENDING PAGE NOT APPROVED
+            TO DO:  EDIT 
        </span>
        <div v-if="$page.props.flash.success" ><span class="p-3 text-gray-200">{{ successMessage($page.props.flash.success)  }}</span></div>
         <div v-if="$page.props.flash.error" class="flex items-center rounded-md bg-red-600 my-4 h-8 "><span class="p-3 text-gray-200">{{ $page.props.flash.error }}</span></div>
@@ -43,7 +43,7 @@
                                 <td class="whitespace-nowrap px-6 py-4 font-medium text-center">{{ upload.title}}</td>
                                 <td class="whitespace-nowrap px-6 py-4 text-center">
                                     
-                                    <Image :src="upload.image ? appUrl+upload.image:'/storage/Images/default.png'" alt="Image" width="60" preview>
+                                    <Image :src="upload.image ? appUrl+upload.image: appUrl+'Images/default.png'" alt="Image" width="60" preview>
                                         <template #indicator>
                                             <i class="pi pi-eye"></i>
                                         </template>
@@ -101,7 +101,7 @@
 
 <script setup>
 import DashboardLayout from '../../../Layout/DashboardLayout.vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
 import { ref } from 'vue'
 import Pagination from '../../../AdminComponents/Pagination.vue';
 import { toUpperFirst } from '../../../../Functions/Methods.vue';
@@ -142,6 +142,11 @@ function successMessage(message)
         icon:'success',
         allowOutsideClick:false,
         allowEscapeKey:false,
+    }).then((result)=>{
+        if(result.isConfirmed)
+        {
+            location.reload();
+        }
     })
 }
 
@@ -161,9 +166,9 @@ function deleteConfirmation(fileId)
     }).then((result)=>{
         if(result.isConfirmed)
         {
-            const userDeleteUrl = route('admin.userDelete', {user: fileId});
-
-            router.delete(userDeleteUrl);
+            const deleteUrl = route('3d.pending3dDelete', {id: fileId});
+            
+            router.delete(deleteUrl);
         }
 
         if(result.isDismissed)
