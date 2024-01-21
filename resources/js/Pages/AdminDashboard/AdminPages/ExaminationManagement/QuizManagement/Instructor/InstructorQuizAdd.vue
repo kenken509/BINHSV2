@@ -374,7 +374,7 @@ const handleAddModalQuestion = () => {
         preOptionC.value = null;
         preOptionD.value = null;
         preAnswer.value = null;
-
+        
         //console.log(preQuestionsArray);
         saveQuestionsToLocalStorage(existingQuestion.value);
         //console.log(preQuestionsArray);

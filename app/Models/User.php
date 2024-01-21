@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Section;
 use App\Models\Subject;
+use App\Models\ThreeDFile;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
@@ -113,5 +114,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function grade()
     {
         return $this->hasOne(StudentGrade::class,'student_id', 'id');
+    }
+
+    public function ThreeDUpload()
+    {
+        return $this->hasMany(ThreeDFile::class,'created_by','id');
     }
 }

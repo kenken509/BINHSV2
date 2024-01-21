@@ -9,11 +9,11 @@
                             
             </div>
         </div>
-        <span class="text-red-500 text-[30px]">TO DO: PROCESS THE SUBMISSION ON BACKEND</span>
+        
         <div  class="col-span-12 mt-8">
             <form @submit.prevent="submit" id="submitForm">
                 <div class="flex flex-col">
-                    <label for="title"  class="my-2">3D Name:</label>
+                    <label for="title"  class="my-2">Title:</label>
                     <InputText id="title" v-model="form.title" class="w-full" required/>
                 </div>
 

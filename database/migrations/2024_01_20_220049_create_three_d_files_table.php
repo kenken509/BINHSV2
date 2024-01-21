@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('three_d_files', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->string('image')->nullable();
-            $table->string('filename');
+            $table->string('threeDLink');
             $table->unsignedBigInteger('subject_id');
             $table->enum('status',['pending','approved']);
             $table->unsignedBigInteger('created_by')->nullable();

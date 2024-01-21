@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ThreeDFile extends Model
 {
     use HasFactory;
+
+    public function instructor()
+    {
+        return $this->belongsTo(User::class,'created_by','id');
+    }
 }
