@@ -26,8 +26,10 @@ class ThreeDFileController extends Controller
         dd($request);
         $new3d = new ThreeDFile();
 
-        $new3d->three_d_name = $request->name;
+        $new3d->title = $request->title;
         $new3d->description = $request->description;
+
+        
     }
     
 }

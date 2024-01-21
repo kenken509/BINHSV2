@@ -238,7 +238,7 @@
 <script setup>
 import DashboardLayout from '../../../Layout/DashboardLayout.vue';
 import InputError from '../../../../GlobalComponent/InputError.vue';
-import TestLinkLoadingSpinner from '../../../../GlobalComponent/TestLinkLoadingSpinner.vue';
+import TestLinkLoadingSpinner from '../../../../globalcomponent/testlinkloadingspinner.vue';
 import { usePage,useForm, router } from '@inertiajs/vue3';
 import {ref, computed} from 'vue';
 import Swal from 'sweetalert2';

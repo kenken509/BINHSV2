@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('three_d_files', function (Blueprint $table) {
             $table->id();
-            $table->string('three_d_name');
+            $table->string('title');
             $table->string('description');
             $table->string('image')->nullable();
             $table->string('filename');
