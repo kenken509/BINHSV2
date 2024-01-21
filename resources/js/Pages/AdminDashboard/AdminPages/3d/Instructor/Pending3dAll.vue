@@ -10,7 +10,11 @@
                 </span>
             </div>
        </div>
-       {{  }}
+       <span class="text-red-500">
+            TO DO: HANDLE DELETE, EDIT --- THIS SHOULD BE PENDING PAGE NOT APPROVED
+       </span>
+       <div v-if="$page.props.flash.success" ><span class="p-3 text-gray-200">{{ successMessage($page.props.flash.success)  }}</span></div>
+        <div v-if="$page.props.flash.error" class="flex items-center rounded-md bg-red-600 my-4 h-8 "><span class="p-3 text-gray-200">{{ $page.props.flash.error }}</span></div>
         <!--ALL PENDING UPLOADS-->
         <div  class="overflow-x-auto sm:-mx-6 lg:-mx-8 mt-4 overflow-x">
             <div class="inline-block min-w-full py-2 sm:px-6  lg:px-8"> 
@@ -85,11 +89,12 @@
                     </table>
                 </div>
             </div>
+            <div v-if="data.pending3d.data.length > 1"  class="w-full flex justify-center mt-8 mb-8">
+                <Pagination :links="data.pending3d.links"/>    
+            </div>
         </div>
-        <!-- <div v-if="users.data.length && allUsersVisible" class="w-full flex justify-center mt-8 mb-8">
-            <Pagination :links="users.links"/>    
-        </div> -->
-               <!--ALL PENDING UPLOADS-->
+        
+               <!--ALL PENDING UPLOADS  v-if="users.data.length && allUsersVisible"-->
     </DashboardLayout>
     
 </template>
@@ -100,6 +105,7 @@ import { usePage } from '@inertiajs/vue3';
 import { ref } from 'vue'
 import Pagination from '../../../AdminComponents/Pagination.vue';
 import { toUpperFirst } from '../../../../Functions/Methods.vue';
+import Swal from 'sweetalert2';
 
 const searchField = ref(null)
 const user = usePage().props.user
@@ -127,4 +133,47 @@ data.pending3d.data.forEach(upload => {
     upload.showFullDescription = false;
 });
 
+
+function successMessage(message)
+{
+    Swal.fire({
+        title:'Success',
+        text:message+'!',
+        icon:'success',
+        allowOutsideClick:false,
+        allowEscapeKey:false,
+    })
+}
+
+function deleteConfirmation(fileId)
+{
+    Swal.fire({
+        title:'Delete confirmation',
+        text:"You won't be able to revert this!",
+        icon:'warning',
+        confirmButtonText:'Yes, delete it!',
+        cancelButtonText:'Cancel',
+        showCancelButton:true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        allowOutsideClick:false,
+        allowEscapeKey:false,
+    }).then((result)=>{
+        if(result.isConfirmed)
+        {
+            const userDeleteUrl = route('admin.userDelete', {user: fileId});
+
+            router.delete(userDeleteUrl);
+        }
+
+        if(result.isDismissed)
+        {
+            Swal.fire({
+                title:'Canceled',
+                text:'Your action was canceled!',
+                icon:'error',
+            })
+        }
+    })
+}
 </script>

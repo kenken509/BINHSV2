@@ -164,7 +164,7 @@
                     </div>
                 </div>
                 <!--ALL USERS-->
-
+                
                 <div v-if="users.data.length && allUsersVisible" class="w-full flex justify-center mt-8 mb-8">
                     <Pagination :links="users.links"/>    
                 </div>
