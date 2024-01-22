@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Database\QueryException;
 
 class ThreeDFileController extends Controller
 {
@@ -72,7 +73,7 @@ class ThreeDFileController extends Controller
             DB::commit();
 
             return redirect()->route('3d.pending3dShowAll')->with('success', 'Successfully Added new 3D.');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             // Log or handle the exception as needed
             Log::info("this is the error: $e");
@@ -93,4 +94,102 @@ class ThreeDFileController extends Controller
         return redirect()->route('3d.pending3dShowAll')->with('success', 'Deleted Successfully!');
     }
     
+
+    public function pending3dEdit($id)
+    {
+        
+        $fileToEdit = ThreeDFile::findOrFail($id);
+
+        return inertia('AdminDashboard/AdminPages/3d/Instructor/Edit3d',[
+            'fileToEdit' => $fileToEdit,
+        ]);
+    }
+
+    public function pending3dUpdate(Request $request)
+    {
+        
+        $fileToUpdate = ThreeDFile::findOrFail($request->id);
+        
+
+        // Check if there is a new image file in the request
+        if ($request->hasFile('image')) {
+            try{
+                DB::beginTransaction();
+                // Delete the old image file
+                Storage::delete($fileToUpdate->image);
+                
+
+                $imageFile = $request->file('image');
+                $originalName = $imageFile->getClientOriginalName();
+                $randomString = Str::random(10);
+                $imageNewName = $randomString . '_' . $originalName;
+
+                $path = $imageFile->storeAs('Images', $imageNewName, 'public');
+
+
+                $fileToUpdate->title = $request->title;
+                $fileToUpdate->description = $request->description;
+                $fileToUpdate->image = $path;
+                $fileToUpdate->threeDLink = $request->threeDLink;
+                $fileToUpdate->save();
+                DB::commit();
+
+                return to_route('3d.pending3dShowAll')->with('success', 'Updated Successfully.');
+                
+            }
+            catch (QueryException $e) 
+            {
+                DB::rollback();
+                // Log the database exception
+                Log::error("Database Exception: {$e->getMessage()}");
+    
+                // Return a response or redirect with an error message
+                return redirect()->route('3d.pending3dShowAll')->with('error', 'Database error occurred!');
+            }
+            catch (\Exception $e) 
+            {
+                DB::rollback();
+                // Log or handle the exception as needed
+                Log::info("this is the error: $e");
+                return to_route('3d.pending3dShowAll')->with('error', 'Update Failed!');
+            }
+        }
+        else
+        {
+            try
+            {
+                DB::beginTransaction();
+
+                $fileToUpdate->title = $request->title;
+                $fileToUpdate->description = $request->description;
+                $fileToUpdate->threeDLink = $request->threeDLink;
+                $fileToUpdate->save();
+
+                DB::commit();
+
+                return to_route('3d.pending3dShowAll')->with('success', 'Updated Successfully.');
+            }
+            catch (QueryException $e) 
+            {
+                DB::rollback();
+                // Log the database exception
+                Log::error("Database Exception: {$e->getMessage()}");
+    
+                // Return a response or redirect with an error message
+                return redirect()->route('3d.pending3dShowAll')->with('error', 'Database error occurred!');
+            }
+            catch (\Exception $e) 
+            {
+                DB::rollback();
+                // Log or handle the exception as needed
+                Log::info("this is the error: $e");
+                return to_route('3d.pending3dShowAll')->with('error', 'Update Failed!');
+            }
+                
+        }
+
+        
+        
+    }
+
 }

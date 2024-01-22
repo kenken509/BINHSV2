@@ -11,7 +11,7 @@
             </div>
        </div>
        <span class="text-red-500">
-            TO DO:  EDIT 
+            TO DO:  IMPLEMENT SEARCH FIELD 
        </span>
        <div v-if="$page.props.flash.success" ><span class="p-3 text-gray-200">{{ successMessage($page.props.flash.success)  }}</span></div>
         <div v-if="$page.props.flash.error" class="flex items-center rounded-md bg-red-600 my-4 h-8 "><span class="p-3 text-gray-200">{{ $page.props.flash.error }}</span></div>
@@ -79,7 +79,8 @@
                                     <div class=" space-x-6" >
                                         <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Delete File'" @click="deleteConfirmation(upload.id)"></span>
                                                                                 
-                                        <span class="pi pi-pencil text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Edit'" @click="handleEditFile(upload.id)" ></span>
+                                        <!-- <span class="pi pi-pencil text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Edit'" @click="handleEditFile(upload.id)" ></span> -->
+                                        <Link :href="route('3d.pending3dEdit', {id:upload.id} )" class="cursor-pointer hover:dark:scale-125" v-tooltip.left="'Edit'" ><span class="pi pi-pencil text-green-600 scale-110 hover:dark:scale-150"></span></Link>
                                     </div>
                                     
                                 </td>
@@ -101,7 +102,7 @@
 
 <script setup>
 import DashboardLayout from '../../../Layout/DashboardLayout.vue';
-import { usePage, router } from '@inertiajs/vue3';
+import { usePage, router, Link } from '@inertiajs/vue3';
 import { ref } from 'vue'
 import Pagination from '../../../AdminComponents/Pagination.vue';
 import { toUpperFirst } from '../../../../Functions/Methods.vue';
@@ -181,4 +182,6 @@ function deleteConfirmation(fileId)
         }
     })
 }
+
+
 </script>

@@ -337,6 +337,7 @@ Route::controller(ThreeDFileController::class)->group(function(){
     Route::get('3d-managment/add', 'pending3dShowAdd')->name('3d.pending3dShowAdd');
     Route::post('3d-managment/store', 'pending3dStore')->name('3d.pending3dStore');
     Route::delete('3d-management/pending-3d/delete/{id}', 'pending3dDelete')->name('3d.pending3dDelete');
-    
+    Route::get('3d-management/pending-3d/edit/{id}', 'pending3dEdit')->name('3d.pending3dEdit');
+    Route::post('3d-managment/pending-3d/update/', 'pending3dUpdate')->name('3d.pending3dUpdate');
 });
 
