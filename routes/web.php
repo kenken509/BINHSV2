@@ -333,6 +333,7 @@ Route::controller(ThreeDFileController::class)->group(function(){
     Route::get('3d-managment/pending', 'pending3dShow')->name('3d.pending3dShow');
     
     //instructor 
+    Route::get('3d-management/approved-3d', 'approved3dShowAll')->name('3d.approved3dShowAll');
     Route::get('3d-management/pending-3d', 'pending3dShowAll')->name('3d.pending3dShowAll');
     Route::get('3d-managment/add', 'pending3dShowAdd')->name('3d.pending3dShowAdd');
     Route::post('3d-managment/store', 'pending3dStore')->name('3d.pending3dStore');

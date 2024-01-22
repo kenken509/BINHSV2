@@ -15,6 +15,20 @@ use Illuminate\Database\QueryException;
 
 class ThreeDFileController extends Controller
 {
+    //instructor all approved 3d
+    public function approved3dShowAll()
+    {
+        $instructorId = Auth::user()->id;
+
+        $approved3D = ThreeDFile::where('status', 'approved')
+                                ->where('created_by', $instructorId)
+                                ->with('instructor')
+                                ->orderBy('approved_date','desc')->paginate(10);
+
+        return inertia('AdminDashboard/AdminPages/3d/Instructor/Approved3d',[
+            'approved3D' => $approved3D,
+        ]);
+    }
     public function pending3dShow()
     {
     

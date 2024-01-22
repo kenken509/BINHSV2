@@ -126,7 +126,7 @@ const truncateDescription = (description) => {
     const words = description.split(' ');
 
     // Take the first five words and join them back into a string
-    return words.slice(0, 5).join(' ');
+    return words.slice(0, 3).join(' ');
 };
 
 // Iterate through the data and add a property to track whether the full description is shown

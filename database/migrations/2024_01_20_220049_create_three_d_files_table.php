@@ -19,11 +19,14 @@ return new class extends Migration
             $table->string('threeDLink');
             $table->unsignedBigInteger('subject_id');
             $table->enum('status',['pending','approved']);
+            $table->unsignedBigInteger('approved_by')->nullable();
+            $table->date('approved_date')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
 
-            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('restrict')->onUpdate('restrict');
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('restrict');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('approved_by')->references('id')->on('users')->onDelete('restrict');
         });
     }
 
