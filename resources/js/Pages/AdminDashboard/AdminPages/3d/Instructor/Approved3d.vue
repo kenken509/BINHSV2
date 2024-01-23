@@ -15,6 +15,7 @@
             </div>
         </div>
         
+        
        <div v-if="filteredData"  class="overflow-x-auto sm:-mx-6 lg:-mx-8 mt-4 overflow-x">
             <div class="inline-block min-w-full py-2 sm:px-6  lg:px-8">
                 <div class="overflow-x-scroll rounded-lg">

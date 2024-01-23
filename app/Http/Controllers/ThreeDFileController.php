@@ -69,8 +69,17 @@ class ThreeDFileController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
+
+        $searchRejected3d = ThreeDFile::where('status', 'rejected')
+            ->where('created_by', $instructorId)
+            ->with('instructor') // Eager load the 'instructor' relationship
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+            
         return inertia('AdminDashboard/AdminPages/3d/Instructor/Rejected3dAll', [
             'rejected3d' => $rejected3d,
+            'searchRejected3d' => $searchRejected3d,
         ]);
     }
 
