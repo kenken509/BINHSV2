@@ -15,7 +15,7 @@
             </div>
         </div>
         <span class="text-red-500">
-            TO DO: SHOW ALL PENDING 3D 
+            TO DO: IMPLEMENT SEARCH FIELD 
         </span>
         
         <div v-if="$page.props.flash.success" ><span class="p-3 text-gray-200">{{ successMessage($page.props.flash.success)  }}</span></div>
