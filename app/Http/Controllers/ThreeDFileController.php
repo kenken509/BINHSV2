@@ -27,10 +27,16 @@ class ThreeDFileController extends Controller
                                 ->with('instructor', 'instructor.subject')
                                 ->with('approver')
                                 ->orderBy('approved_date','desc')->paginate(10);
+        $searchApproved3D = ThreeDFile::where('status', 'approved')
+                                ->where('created_by', $instructorId)
+                                ->with('instructor', 'instructor.subject')
+                                ->with('approver')
+                                ->orderBy('approved_date','desc')->get();
 
         
         return inertia('AdminDashboard/AdminPages/3d/Instructor/Approved3d',[
             'approved3D' => $approved3D,
+            'searchApproved3D' => $searchApproved3D,
         ]);
     }
     
