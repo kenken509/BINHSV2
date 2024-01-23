@@ -247,13 +247,16 @@
                 <ul id="3d-management" class="hidden py-2 space-y-2">
                   <!--Instructor part-->
                   <li v-if="user.role === 'instructor'">
-                        <a  :href="route('3d.approved3dShowAll')" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 "  ><span class="pi pi-list  scale-150 pr-3 text-gray-200" ></span>Approved</a>
+                        <a  :href="route('3d.approved3dShowAll')" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 "  ><span class="pi pi-box  scale-150 pr-3 text-gray-200" ></span>Approved</a>
                   </li> 
                   <li v-if="user.role === 'instructor'">
-                      <a  :href="route('3d.pending3dShowAll')" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 "  ><span class="pi pi-list  scale-150 pr-3 text-gray-200" ></span>Pending</a>
+                      <a  :href="route('3d.pending3dShowAll')" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 "  ><span class="pi pi-box  scale-150 pr-3 text-gray-200" ></span>Pending</a>
+                  </li> 
+                  <li v-if="user.role === 'instructor'">
+                      <a  :href="route('3d.rejected3dShowAll')" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 "  ><span class="pi pi-box  scale-150 pr-3 text-gray-200" ></span>Rejected</a>
                   </li> 
                   <li v-if="user.role === 'instructor'" >
-                      <a  :href="route('3d.pending3dShowAdd')" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 "  ><span class="pi pi-list  scale-150 pr-3 text-gray-200" ></span>Add</a>
+                      <a  :href="route('3d.pending3dShowAdd')" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 "  ><span class="pi pi-box  scale-150 pr-3 text-gray-200" ></span>Add</a>
                   </li>
                   <!--Instructor part-->
                   

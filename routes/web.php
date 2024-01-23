@@ -333,13 +333,16 @@ Route::controller(ThreeDFileController::class)->group(function(){
     Route::get('3d-managment/approved', 'approved3dShow')->name('3d.approved3dShow');
     Route::get('3d-managment/pending', 'pending3dShow')->name('3d.pending3dShow');
     Route::get('3d-managment/approve-3d/{id}', 'approve3d')->name('3d.approve3d');
-    Route::get('3d-managment/reject-3d/{id}', 'reject3d')->name('3d.reject3d');
+    
     //instructor 
+    Route::get('3d-managment/reject-3d/{id}', 'reject3d')->name('3d.reject3d');
     Route::get('3d-management/approved-3d', 'approved3dShowAll')->name('3d.approved3dShowAll');
     Route::get('3d-management/pending-3d', 'pending3dShowAll')->name('3d.pending3dShowAll');
+    Route::get('3d-management/rejected-3d', 'rejected3dShowAll')->name('3d.rejected3dShowAll');
     Route::get('3d-managment/add', 'pending3dShowAdd')->name('3d.pending3dShowAdd');
     Route::post('3d-managment/store', 'pending3dStore')->name('3d.pending3dStore');
     Route::delete('3d-management/pending-3d/delete/{id}', 'pending3dDelete')->name('3d.pending3dDelete');
+    Route::delete('3d-management/rejected-3d/delete/{id}', 'rejected3dDelete')->name('3d.rejected3dDelete');
     Route::get('3d-management/pending-3d/edit/{id}', 'pending3dEdit')->name('3d.pending3dEdit');
     Route::post('3d-managment/pending-3d/update/', 'pending3dUpdate')->name('3d.pending3dUpdate');
 });

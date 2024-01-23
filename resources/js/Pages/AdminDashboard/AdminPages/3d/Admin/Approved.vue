@@ -161,7 +161,7 @@ function approvalConfirmation(fileId)
 
 function rejectConfirmation(fileId)
 {
-    alert(fileId)
+    
     Swal.fire({
         title:'Rejection Confirmation',
         text:'Are you sure you?',

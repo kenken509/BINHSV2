@@ -25,6 +25,7 @@ class ThreeDFileController extends Controller
         $approved3D = ThreeDFile::where('status', 'approved')
                                 ->where('created_by', $instructorId)
                                 ->with('instructor')
+                                ->with('approver')
                                 ->orderBy('approved_date','desc')->paginate(10);
 
         return inertia('AdminDashboard/AdminPages/3d/Instructor/Approved3d',[
@@ -44,6 +45,32 @@ class ThreeDFileController extends Controller
         return inertia('AdminDashboard/AdminPages/3d/Instructor/Pending3dAll', [
             'pending3d' => $pending3d,
         ]);
+    }
+
+    public function rejected3dShowAll()
+    {
+        $instructorId = Auth::user()->id;
+        $rejected3d = ThreeDFile::where('status', 'rejected')
+            ->where('created_by', $instructorId)
+            ->with('instructor') // Eager load the 'instructor' relationship
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return inertia('AdminDashboard/AdminPages/3d/Instructor/Rejected3dAll', [
+            'rejected3d' => $rejected3d,
+        ]);
+    }
+
+    public function rejected3dDelete($id)
+    {
+        $file = ThreeDFile::findOrFail($id);
+        if($file->image){
+            Storage::disk('public')->delete($file->image);
+        }
+            
+        $file->delete();
+        
+        return redirect()->route('3d.rejected3dShowAll')->with('success', 'Deleted Successfully!');
     }
     
     public function pending3dShowAdd()
@@ -209,7 +236,7 @@ class ThreeDFileController extends Controller
                             ->with('instructor')
                             ->orderBy('created_at','desc')->paginate(10);
 
-        return inertia('AdminDashboard/AdminPages/3d/Admin/Apprved3d',[
+        return inertia('AdminDashboard/AdminPages/3d/Admin/Approved',[
             'approved3D' => $approved3D,
         ]);                   
     }
@@ -240,7 +267,7 @@ class ThreeDFileController extends Controller
             $file->save();
 
             DB::commit();
-            return to_route('3d.pending3dShow')->with('success', 'Approved Successfully.');
+            return redirect()->route('3d.approved3dShow')->with('success', 'Approved Successfully.');
         }
         catch(\Exception $e)
         {

@@ -28,7 +28,7 @@
                                 
                                
                                 <th scope="col" class="px-6 py-4 text-center">Approved by</th>
-                                <th scope="col" class="px-6 py-4 text-center">Approval Date</th>
+                                <th scope="col" class="px-6 py-4 text-center">Approved Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,8 +71,8 @@
                                     </a>
                                 </td>
                                 
-                                <td class="whitespace-nowrap px-6 py-4 font-medium text-red-500 text-center">do this</td>
-                                <td class="whitespace-nowrap px-6 py-4 font-medium text-red-500 text-center">{{ approved3D.approved_at }}</td>
+                                <td class="whitespace-nowrap px-6 py-4 font-medium  text-center">Admin {{ approved3D.approver.lName }}</td>
+                                <td class="whitespace-nowrap px-6 py-4 font-medium  text-center">{{ formatDate(approved3D.approved_date)  }}</td>
                             </tr>
                             
                         </tbody>
@@ -111,4 +111,8 @@ const toggleDescription = (approved3D) => {
     approved3D.showFullDescription = !approved3D.showFullDescription;
 };
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+};
 </script>
