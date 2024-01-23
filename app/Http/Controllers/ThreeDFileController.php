@@ -255,9 +255,15 @@ class ThreeDFileController extends Controller
         $pending3d = ThreeDFile::where('status','pending')
                             ->with('instructor')
                             ->orderBy('created_at','desc')->paginate(10);
+        
+        $searchPending3d = ThreeDFile::where('status','pending')
+                        ->with('instructor', 'instructor.subject')
+                        ->orderBy('created_at','desc')->get();
 
+        
         return inertia('AdminDashboard/AdminPages/3d/Admin/Pending3d',[
             'pending3d' => $pending3d,
+            'searchPending3d' => $searchPending3d,
         ]);
     }
 
