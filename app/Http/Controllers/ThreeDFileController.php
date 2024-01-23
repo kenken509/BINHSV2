@@ -15,7 +15,9 @@ use Illuminate\Database\QueryException;
 
 class ThreeDFileController extends Controller
 {
-    //instructor all approved 3d
+
+    // Instructor part controller ****************************************************************
+    
     public function approved3dShowAll()
     {
         $instructorId = Auth::user()->id;
@@ -29,17 +31,7 @@ class ThreeDFileController extends Controller
             'approved3D' => $approved3D,
         ]);
     }
-    public function pending3dShow()
-    {
     
-        $pending3d = ThreeDFile::where('status','pending')->orderBy('created_at','desc')->paginate(2);
-
-        return inertia('AdminDashboard/AdminPages/3d/Admin/Pending3d',[
-            'pending3d' => $pending3d,
-        ]);
-    }
-
-    //instructor pending page
     public function pending3dShowAll()
     {
         $instructorId = Auth::user()->id;
@@ -206,4 +198,76 @@ class ThreeDFileController extends Controller
         
     }
 
+    // Instructor part controller ****************************************************************
+
+
+
+    // Admin part controller ****************************************************************
+    
+    public function pending3dShow()
+    {
+    
+        $pending3d = ThreeDFile::where('status','pending')
+                            ->with('instructor')
+                            ->orderBy('created_at','desc')->paginate(10);
+
+        return inertia('AdminDashboard/AdminPages/3d/Admin/Pending3d',[
+            'pending3d' => $pending3d,
+        ]);
+    }
+
+    public function approve3d($id)
+    {
+        $file = ThreeDFile::findOrFail($id);
+        $instructorId = Auth::user()->id;
+
+        try{
+
+            DB::beginTransaction();
+            $file->status = 'approved';
+            $file->approved_by  = $instructorId;
+            $file->approved_date = now();
+            $file->save();
+
+            DB::commit();
+            return to_route('3d.pending3dShow')->with('success', 'Approved Successfully.');
+        }
+        catch(\Exception $e)
+        {
+            DB::rollback();
+            // Log or handle the exception as needed
+            Log::info("this is the error: $e");
+            return redirect()->back->with('error', 'Approval Failed!');
+        }
+        
+
+    } 
+   
+    
+
+    public function reject3d($id)
+    {
+        $file = ThreeDFile::findOrFail($id);
+        $instructorId = Auth::user()->id;
+
+        try{
+
+            DB::beginTransaction();
+            $file->status = 'rejected';
+            $file->approved_by  = $instructorId;
+            $file->approved_date = now();
+            $file->save();
+
+            DB::commit();
+            return to_route('3d.pending3dShow')->with('success', 'Rejected Successfully.');
+        }
+        catch(\Exception $e)
+        {
+            DB::rollback();
+            // Log or handle the exception as needed
+            Log::info("this is the error: $e");
+            return redirect()->back->with('error', 'Rejection Failed!');
+        }
+    }
+    // Admin part controller ****************************************************************
 }

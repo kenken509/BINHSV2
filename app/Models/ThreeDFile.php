@@ -13,4 +13,9 @@ class ThreeDFile extends Model
     {
         return $this->belongsTo(User::class,'created_by','id');
     }
+
+    public function approver()
+    {
+        return $this->belongsTo(User::class, 'approved_by', 'id');
+    }
 }
