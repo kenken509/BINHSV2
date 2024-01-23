@@ -203,6 +203,16 @@ class ThreeDFileController extends Controller
 
 
     // Admin part controller ****************************************************************
+    public function approved3dShow()
+    {
+        $approved3D = ThreeDFile::where('status','approved')
+                            ->with('instructor')
+                            ->orderBy('created_at','desc')->paginate(10);
+
+        return inertia('AdminDashboard/AdminPages/3d/Admin/Apprved3d',[
+            'approved3D' => $approved3D,
+        ]);                   
+    }
     
     public function pending3dShow()
     {

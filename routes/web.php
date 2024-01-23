@@ -330,6 +330,7 @@ Route::controller(DatabaseBackUpController::class)->group(function(){
 });
 
 Route::controller(ThreeDFileController::class)->group(function(){
+    Route::get('3d-managment/approved', 'approved3dShow')->name('3d.approved3dShow');
     Route::get('3d-managment/pending', 'pending3dShow')->name('3d.pending3dShow');
     Route::get('3d-managment/approve-3d/{id}', 'approve3d')->name('3d.approve3d');
     Route::get('3d-managment/reject-3d/{id}', 'reject3d')->name('3d.reject3d');
