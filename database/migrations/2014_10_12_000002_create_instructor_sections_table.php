@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('instructor_id')->constrained();
             $table->unsignedBigInteger('section_id')->constrained();
             $table->timestamps();
-
+            
             $table->foreign('instructor_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('restrict');
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('restrict')->onUpdate('restrict');
         });

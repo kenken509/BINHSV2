@@ -12,6 +12,7 @@
         </div>
        
         <div v-if="$page.props.flash.success" >{{ successMessage($page.props.flash.success) }} </div>
+        <div v-if="$page.props.flash.error" >{{ errorMessage($page.props.flash.error) }} </div>
         <div class=" overflow-x-auto shadow-md rounded-lg ">
             <table  class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-200 uppercase bg-green-700  ">
@@ -71,9 +72,14 @@
                             {{ section.subject.name}}
                         </td>
                         
-                        <td v-for="instructor in section.instructors" scope="row" class="px-6 py-4 font-medium text-gray-900  ">
-                            {{ instructor.lName }}, {{  instructor.fName }} 
+                        <td  v-for="instructor in section.instructors" scope="row" class="px-6 py-4 font-medium text-gray-900  ">
+                            
+                            <div v-if="instructor">
+                                {{ instructor.lName }}, {{  instructor.fName }} {{  }}
+                            </div>
+                            
                         </td>
+                        
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900  ">
                             {{ section.maxStudents}}
                         </td>
@@ -82,9 +88,9 @@
                         </td>
                         <td>
                             <div  class=" space-x-4 px-2">
-                                <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 mx-2 cursor-pointer" @click="deleteConfirmation(section.id)"></span> 
+                                <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 mx-2 cursor-pointer" v-tooltip.left="'Delete section '" @click="deleteConfirmation(section.id)"></span> 
                                  <!-- <Link :href="route('section.delete', {section:section.id})" class="cursor-pointer" v-tooltip.left="'Delete Section'" as="button" method="delete" ><span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 mx-2"></span></Link> -->
-                                 <Link :href="route('section.edit', {id:section.id})" class="cursor-pointer hover:dark:scale-125" v-tooltip.right="'Edit Section'" ><span class="pi pi-user-edit text-green-600 scale-110 hover:dark:scale-150"></span></Link>
+                                 <Link :href="route('section.edit', {id:section.id})" class="cursor-pointer hover:dark:scale-125" v-tooltip.left="'Edit Section'" ><span class="pi pi-user-edit text-green-600 scale-110 hover:dark:scale-150"></span></Link>
                             </div>    
                         </td>
                     </tr>
@@ -475,5 +481,18 @@ function printDiv() {
         };
     }, 1000); // Adjust the delay as needed
     
+}
+
+function errorMessage(message) {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: message + '!',
+    allowOutsideClick:false,
+  }).then((result) => {
+    if (result.isConfirmed) {
+        location.reload();
+    }
+  })
 }
 </script>

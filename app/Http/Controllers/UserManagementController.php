@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Exception;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Section;
@@ -11,11 +12,12 @@ use App\Models\TestModel;
 use App\Models\SchoolYear;
 use App\Models\TestSubject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UserCollection;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
 
 class UserManagementController extends Controller
 {
@@ -91,9 +93,9 @@ class UserManagementController extends Controller
             Storage::disk('public')->delete($user->image);
         }
             
-        $user->delete();
+        $user->forceDelete();
         
-        return redirect()->route('3d.pending3dShowAll')->with('success', 'Deleted Successfully!');
+        return redirect()->route('admin.approveUser.show')->with('success', 'Rejected Successfully!');
     }
 
     public function ApproveUser($id)
@@ -696,10 +698,22 @@ class UserManagementController extends Controller
         
         // Check if the userToDelete is not null
         if ($userToDelete) {
+            try 
+            {
+                DB::beginTransaction();
 
-            $userToDelete->forceDelete();
+                $userToDelete->forceDelete();
 
-            return to_route('admin.showArcivedUser')->with('success', 'Successfuly Deleted Permanently');
+                DB::commit();
+                return to_route('admin.showArcivedUser')->with('success', 'Successfuly Deleted Permanently');
+            }
+            catch (\Exception $e) 
+            {
+                DB::rollBack();
+
+                Log::error('Error deleting user. Error message: ' . $e->getMessage());
+                return to_route('admin.showArcivedUser')->with('error', 'Failed to delete');
+            }
             
         } else {
             return to_route('admin.showArcivedUser')->with('error', 'Failed to delete');

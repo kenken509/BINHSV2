@@ -4,7 +4,7 @@
             <div class="">
                 <span class="text-[20px] font-bold text-gray-500">Users Approval Page</span>
             </div>
-            
+           
             
             <div class="py-4">
                 <span class="p-input-icon-left">
@@ -14,8 +14,8 @@
             </div>
         </div>   
         
-        <div v-if="$page.props.flash.success" class="flex items-center rounded-md bg-[#28a745] my-4 h-8 "><span class="p-3 text-gray-200">{{ $page.props.flash.success }}</span></div>
-        <div v-if="$page.props.flash.error" class="flex items-center rounded-md bg-red-600 my-4 h-8 "><span class="p-3 text-gray-200">{{ $page.props.flash.error }}</span></div>
+        <div v-if="$page.props.flash.success" class="flex items-center rounded-md bg-[#28a745] my-4 h-8 hidden"><span class="p-3 text-gray-200">{{ successMessage($page.props.flash.success) }}</span></div>
+        <div v-if="$page.props.flash.error" class="flex items-center rounded-md bg-red-600 my-4 h-8 hidden"><span class="p-3 text-gray-200">{{ $page.props.flash.error }}</span></div>
         
         <div class=" overflow-x-auto shadow-md sm:rounded-lg mt-4">
             <table  class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -260,6 +260,22 @@ const prevPage = () => {
 const changePageClick = (index)=>
 {
     currentPage.value = index;
+}
+
+function successMessage(message)
+{
+    Swal.fire({
+        title:'Success',
+        text:message+'!',
+        icon:'success',
+        allowOutsideClick:false,
+        allowEscapeKey:false,
+    }).then((val)=>{
+        if(val.isConfirmed)
+        {
+            location.reload();
+        }
+    })
 }
 
 

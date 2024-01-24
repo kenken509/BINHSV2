@@ -84,7 +84,7 @@
                         </div>
 
                         <!--installer TYPE-->
-                        <div class="my-4 ">
+                        <!-- <div class="my-4 ">
                             <h1 class="mb-6">File Type: </h1>
                             <div class="flex space-x-6">
                                 <div class="flex items-center cursor-pointer">
@@ -102,7 +102,7 @@
                                     <InputError :error="form.errors.installerType"/>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         
                         <!--installer TYPE-->
                         <!--Installer Link-->
@@ -355,7 +355,7 @@ const form = useForm({
     media:null,
     image:null,
     video:null,
-    installerType:null,
+    installerType:'windows',
     installerLink:null,
     
 })

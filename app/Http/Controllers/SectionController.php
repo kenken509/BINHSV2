@@ -10,17 +10,21 @@ use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SectionController extends Controller
 {
     public function show(){
         
         
-        
         return inertia('AdminDashboard/AdminPages/SectionManagement/SectionAll', [
-            'sections' => Section::with(['subject', 'instructors', 'student' => function ($query){
+            'sections' => Section::with(['subject', 'instructors' => function ($query) {
+                $query->withTrashed(); // Include trashed instructors
+            }, 'student' => function ($query) {
                 $query->with('section');
-            } ])->latest()->get(),
+            }])
+            ->latest()
+            ->get(),
             'studentUser' => User::all(),
         ]);
     }
@@ -76,11 +80,28 @@ class SectionController extends Controller
         }
         
     }
-
+   
     public function delete(Section $section){
-        $section->instructors()->detach();
-        $section->delete();
-        return redirect()->back()->with('success', 'Successfully deleted!');
+        try {
+            DB::beginTransaction();
+            // Detach instructors
+            $section->instructors()->detach();
+
+            // Delete the section
+            $section->delete();
+            
+            DB::commit();
+            // Redirect with success message
+            return redirect()->back()->with('success', 'Successfully deleted!');
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+            // Log the error
+            Log::error('Error deleting section. Error message: ' . $e->getMessage());
+
+            // Handle the exception           
+            return redirect()->back()->with('error', 'Failed to  Delete');
+        }
     }
 
     public function edit($id){

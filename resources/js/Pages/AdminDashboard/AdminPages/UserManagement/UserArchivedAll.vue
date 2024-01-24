@@ -12,10 +12,10 @@
                         <InputText v-model="searchField" placeholder="search " />
                     </span>
                 </div>
-                <div v-if="$page.props.flash.success" ><span class="p-3 text-gray-200">{{ successMessage($page.props.flash.success) }}</span></div>
-                <div v-if="$page.props.flash.error" class="flex items-center rounded-md bg-red-600 my-4 h-8 "><span class="p-3 text-gray-200">{{ $page.props.flash.error }}</span></div>
+                
             </div>
-            
+            <div v-if="$page.props.flash.success" class="hidden" ><span class="p-3 text-gray-200">{{ successMessage($page.props.flash.success) }}</span></div>
+                <div v-if="$page.props.flash.error" class="flex items-center rounded-md bg-red-600 my-4 h-8 hidden "><span class="p-3 text-gray-200">{{ errorMessage($page.props.flash.error)  }}</span></div>
             <div  class="overflow-x-auto sm:-mx-6 lg:-mx-8  overflow-x">
                 <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                     <div class=" overflow-x-auto shadow-md sm:rounded-lg mt-4">
@@ -249,7 +249,25 @@ function successMessage(message)
         icon:'success',
         allowOutsideClick:false,
         allowEscapeKey:false,
+    }).then((val)=>{
+        if(val.isConfirmed)
+        {
+            location.reload();
+        }
     })
+}
+
+function errorMessage(message) {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: message + '!',
+    allowOutsideClick:false,
+  }).then((result) => {
+    if (result.isConfirmed) {
+        location.reload();
+    }
+  })
 }
 
 </script>

@@ -290,26 +290,28 @@ class ThreeDFileController extends Controller
 
     public function approve3d($id)
     {
+        
         $file = ThreeDFile::findOrFail($id);
-        $instructorId = Auth::user()->id;
+        $adminId = Auth::user()->id;
 
+        
         try{
 
             DB::beginTransaction();
             $file->status = 'approved';
-            $file->approved_by  = $instructorId;
+            $file->approved_by  = $adminId;
             $file->approved_date = now();
             $file->save();
 
             DB::commit();
-            return redirect()->route('3d.approved3dShow')->with('success', 'Approved Successfully.');
+            return redirect()->route('3d.pending3dShow')->with('success', 'Approved Successfully.');
         }
         catch(\Exception $e)
         {
             DB::rollback();
             // Log or handle the exception as needed
             Log::info("this is the error: $e");
-            return redirect()->back->with('error', 'Approval Failed!');
+            return redirect()->back()->with('error', 'Approval Failed!');
         }
         
 

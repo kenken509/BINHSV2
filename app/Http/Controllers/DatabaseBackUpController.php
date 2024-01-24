@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Exception;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 
 class DatabaseBackUpController extends Controller
 {
@@ -43,52 +45,31 @@ class DatabaseBackUpController extends Controller
         $filename = $request->filename;
         $filePath = storage_path('app/public/backup/' . $filename);
 
-        // Log the start of the restore process
-        Log::info("Starting restore process for file: $filename");
-
-        // Check if the backup file exists
+         
+         // Check if the file exists
         if (file_exists($filePath)) {
-            // Log the existence of the backup file
-            Log::info("Backup file found: $filePath");
-
-            // Assuming you are dealing with a SQL backup file
+            // Read the SQL file content
             $sql = file_get_contents($filePath);
 
-            // Assuming you have a database connection
-            $dbHost = env('DB_HOST');
-            $dbDatabase = env('DB_DATABASE');
-            $dbUsername = env('DB_USERNAME');
-            $dbPassword = env('DB_PASSWORD');
+            // Wrap the restoration in a try-catch block
+            try {
+                // Disable foreign key checks to prevent issues during the import
+                DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-            // Redirect both STDOUT and STDERR to output variable
-            $command = "mysql -h $dbHost -u $dbUsername -p$dbPassword $dbDatabase < $filePath 2>&1";
+                // Run the SQL to restore the database
+                DB::unprepared($sql);
 
-            // Log the command being executed
-            Log::info("Executing command: $command");
+                // Re-enable foreign key checks
+                DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
-            // Execute the restore command
-            exec($command, $output, $returnValue);
-
-            // Log the output and return value of the command
-            Log::info("Command output: " . implode("\n", $output));
-            Log::info("Command return value: $returnValue");
-
-            if ($returnValue === 0) {
-                // Restore successful
-                Log::info("Backup restored successfully");
                 return redirect()->route('database.backup.show')->with('success', 'Database restored successfully!');
-            } else {
-                // Restore failed
-                $errorOutput = shell_exec($command);
-                Log::error("Failed to restore backup. Command output: " . $errorOutput);
-                Log::info("Command return value: $returnValue");
+            } catch (Exception $e) {
                 return redirect()->route('database.backup.show')->with('error', 'Database restoration failed!');
             }
         } else {
-            // Backup file not found
-            Log::error("Backup file not found: $filePath");
-            return redirect()->route('database.backup.show')->with('error', 'Backup file not found!');
+            return redirect()->route('database.backup.show')->with('error', 'Backup file not found.');
         }
+        
     }
 
 }

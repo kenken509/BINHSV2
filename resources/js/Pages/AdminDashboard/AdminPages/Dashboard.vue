@@ -4,14 +4,14 @@
             class="flex justify-between border-bot-only border-gray-600 shadow-md mb-[30px]"
         >
             <span class="text-[20px] font-bold text-gray-500"
-                >Admin Dashboard</span
+                >Dashboard</span
             >
             <span class="text-[20px] font-bold text-gray-500"
                 >School year: {{ currentSchoolYear }}</span
             >
         </div>
         
-        <span class="text-red-500">TO DO: FIX UNRESPONSIVE CLICK BUG ON SIDEBAR 3d mgmt</span>
+        
         
         <section class="grid grid-cols-12 mt-4">
             <div class="col-span-12 md:col-span-3">
@@ -23,7 +23,6 @@
                     :textColor="'text-red-500'"
                     :evaluation="'decreased'"
                 ></DashboardCard>
-                
             </div>
             <!-- <div class="col-span-12 md:col-span-6 lg:col-span-3">
             <DashboardCard :title="'INSTRUCTORS'" :value="10" :percentage="10" :arrow="'pi pi-angle-down text-red-500'" :textColor="'text-red-500'" :evaluation="'decreased'"></DashboardCard>
@@ -468,12 +467,12 @@ onMounted(() => {
                     borderColor: "#36A2EB",
                     backgroundColor: "#ffeab8",
                 },
-                {
-                    label: "Android installer download attempt",
-                    data: data.androidMonthlyDownloads.map((row) => row.count),
-                    borderColor: "#36A2EB",
-                    backgroundColor: "#a6deae",
-                },
+                // {
+                //     label: "Android installer download attempt",
+                //     data: data.androidMonthlyDownloads.map((row) => row.count),
+                //     borderColor: "#36A2EB",
+                //     backgroundColor: "#a6deae",
+                // },
                 {
                     label: "Web page visitors per month",
                     data: data.monthlyVisit.map((row) => row.total_visits),

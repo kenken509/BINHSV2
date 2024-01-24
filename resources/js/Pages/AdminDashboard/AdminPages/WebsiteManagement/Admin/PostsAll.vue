@@ -234,7 +234,10 @@
                             
                         </td>
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900 ">
-                            <a :href=post.installerLink target="_blank"  class=" text-blue-600" >{{ post.installerLink  }} </a> 
+                            <a :href=post.installerLink target="_blank"  class=" text-blue-600" >
+                                <span class="text-blue-700"><i class="fab fa-google-drive"></i> </span>
+                                <span class="underline ml-2">Gdrive Link</span>
+                            </a> 
                         </td>
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900 ">
                             <span class>{{ post.author.lName+', '+post.author.fName }} </span> 

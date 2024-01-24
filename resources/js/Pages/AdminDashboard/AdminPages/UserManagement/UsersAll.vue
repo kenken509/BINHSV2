@@ -403,9 +403,9 @@ function deleteConfirmation(userId)
 {
     Swal.fire({
         title:'Delete confirmation',
-        text:"You won't be able to revert this!",
+        text:"This will archive the user.",
         icon:'warning',
-        confirmButtonText:'Yes, delete it!',
+        confirmButtonText:'Yes, archive it!',
         cancelButtonText:'Cancel',
         showCancelButton:true,
         confirmButtonColor: '#3085d6',
@@ -470,6 +470,11 @@ function successMessage(message)
         icon:'success',
         allowOutsideClick:false,
         allowEscapeKey:false,
+    }).then((val)=>{
+        if(val.isConfirmed)
+        {
+            location.reload();
+        }
     })
 }
 
