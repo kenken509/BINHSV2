@@ -98,6 +98,17 @@ class IndexController extends Controller
             ]);
         }
 
+        if($page == 'he')
+        {
+            
+            
+            $post = WebPost::with(['attachments','author'])->where('id',$id)->first();
+            
+            return inertia('Index/WebPages/FullPostViews/TracksFullViewCard',[
+                'post' => $post,
+            ]);
+        }
+
         if($page == 'downloads')
         {
             
