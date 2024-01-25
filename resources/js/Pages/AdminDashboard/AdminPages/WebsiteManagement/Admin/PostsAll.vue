@@ -274,7 +274,7 @@ import { ref, computed, onMounted } from 'vue'
 import Swal from 'sweetalert2';
 
 const user = usePage().props.user
-const appUrl = 'http://127.0.0.1:8000/storage/'
+const appUrl = '/storage/'
 const post = defineProps({
     posts:Array,
     about:Array,
