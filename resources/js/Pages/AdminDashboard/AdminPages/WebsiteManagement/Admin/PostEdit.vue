@@ -259,7 +259,7 @@ import { toLowerFirst,toUpperFirst } from '../../../../Functions/Methods.vue'
 import axios from 'axios';
 
 const user = usePage().props.user
-const appUrl = 'http://127.0.0.1:8000/storage/';
+const appUrl = '/storage/';
 const web = defineProps({
     post:Object,
     webPage:String,
