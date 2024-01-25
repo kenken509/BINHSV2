@@ -136,9 +136,8 @@
                     <h1 class="font-bold text-[32px]">Term and Conditions</h1>  
                     <p>Updated at 2024-01-15</p>   
                     <div class="text-start">
-                    <span class="text-red-500">Note: {{ termsAndConditionValidator }}</span>
-                
-            </div>                      
+                        <span class="text-red-500">Note: {{ termsAndConditionValidator }}</span>
+                    </div>                      
                 </div>
                 
             </template>

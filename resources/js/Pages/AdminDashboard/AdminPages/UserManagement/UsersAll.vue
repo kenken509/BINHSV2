@@ -79,7 +79,7 @@
                                                 
                                             
                                                 <span class="pi pi-trash text-red-700 scale-110 hover:dark:scale-150 cursor-pointer"  @click="deleteConfirmation(user.id)"></span>
-
+                                                <span class="pi pi-ban text-red-700 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.left="'Deactivate User'" @click="deactivationConfirmation(user.id)"></span>
                                                 <span class="pi pi-eye text-green-600 scale-110 hover:dark:scale-150 cursor-pointer" v-tooltip.right="'View full info'" @click="openModal(user.id)" ></span>
                                             </div>
                                             

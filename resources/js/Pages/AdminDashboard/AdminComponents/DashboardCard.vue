@@ -66,7 +66,7 @@ if(data.currentCount < data.previousCount )
 
 if(data.previousCount === 0)
 {
-    newCount.value = 'No record from previous school year'
+    newCount.value = 'No available records from previous school year'
 }
 // admin changes
 

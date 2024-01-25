@@ -74,10 +74,23 @@
                         
                         <td  v-for="instructor in section.instructors" scope="row" class="px-6 py-4 font-medium text-gray-900  ">
                             
-                            <div v-if="instructor">
-                                {{ instructor.lName }}, {{  instructor.fName }} {{  }}
+                            <div class="hover:cursor-pointer" v-if="instructor.deleted_at" v-tooltip.left="'Archived Account'">
+                                <span class="text-red-500 opacity-50">{{ instructor.lName }}, {{  instructor.fName }} </span>
                             </div>
                             
+                            <div v-else-if ="instructor.isActive === '2'">
+                                <div class=" space-x-2 hover:cursor-pointer"  v-tooltip.left="'Deactivated Account'">
+                                   
+                                    <span class="text-gray-400"  >
+                                         {{ instructor.lName }}, {{  instructor.fName }} 
+                                    </span>
+                                    <i class="pi pi-exclamation-circle text-red-600" style="font-size: 1rem"></i>
+                                </div>
+                                
+                            </div>
+                            <div v-else>
+                                {{ instructor.lName }}, {{  instructor.fName }} 
+                            </div>
                         </td>
                         
                         <td scope="row" class="px-6 py-4 font-medium text-gray-900  ">
